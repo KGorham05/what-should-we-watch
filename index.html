@@ -14,6 +14,7 @@
 
 <body>
    <div class="container-fluid">
+      <!-- Header -->
       <div class="row">
          <div class="col-12">
             <div class="jumbotron text-center">
@@ -23,22 +24,64 @@
       </div>
 
       <!-- Choices Row -->
-      <div class="row">
+      <div class="row" id="choices-row">
          <div class="col-md-3">
             <div class="card movie-card">
-               <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png" class="card-img-top movie-img" alt="hook poster">
+               <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png"
+                  class="card-img-top movie-img" alt="hook poster">
                <div class="card-body">
                   <h5 class="card-title">Hook</h5>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                      card's content.</p>
-                  <a href="#" class="btn btn-primary">Vote for Hook</a>
+                  <div class="text-center">
+                     <button class="btn btn-primary">Vote for Hook</button>
+                  </div>
                </div>
             </div>
          </div>
 
       </div>
+
+      <div class="row mt-3">
+         <!-- Display Results -->
+         <div class="col-md-6">
+            <div class="card">
+               <div class="card-body">
+                  <h4 class="card-title">Voting Results</h4>
+                  <h5><span class="movie-1-name">Hook</span>: <span id="movie-1-vote-total">0</span></h5>
+                  <h5><span class="movie-1-name">Avengers</span>: <span id="movie-2-vote-total">0</span></h5>
+                  <h5><span class="movie-1-name">Captain America</span>: <span id="movie-3-vote-total">0</span></h5>
+                  <h5><span class="movie-1-name">The Big Lewbowski</span>: <span id="movie-4-vote-total">0</span></h5>
+               </div>
+            </div>
+         </div>
+         <!-- Suggest A Movie -->
+         <div class="col-md-6">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title">Suggest a Movie!</h5>
+                  <form>
+                     <div class="form-group">
+                        <label for="movie-input">Movie Title</label>
+                        <input type="text" class="form-control" id="movie-input" aria-describedby="movie input">
+                        <small id="movie-help" class="form-text text-muted">Movie needs to be on Netflix.</small>
+                     </div>
+                     <div class="form-group">
+                        <label for="suggested-by">Who is suggesting this?</label>
+                        <input type="text" class="form-control" id="suggested-by">
+                     </div>
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
    </div>
 
+   <script src="http://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
    <script src="./app.js"></script>
 </body>
 
