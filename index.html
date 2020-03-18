@@ -14,6 +14,7 @@
 
 <body>
    <div class="container-fluid">
+      
       <!-- Header -->
       <div class="row">
          <div class="col-12">
@@ -26,11 +27,11 @@
       <!-- Choices Row -->
       <div class="row" id="choices-row">
          <div class="col-md-3">
-            <div class="card movie-card">
+            <div class="card">
                <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png"
-                  class="card-img-top movie-img" alt="hook poster">
+                  class="card-img-top" alt="hook poster">
                <div class="card-body">
-                  <h5 class="card-title">Hook</h5>
+                  <h5 class="card-title">Hook - Suggested by <span id="suggested-by">Amber</span></h5>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                      card's content.</p>
                   <div class="text-center">
@@ -39,11 +40,52 @@
                </div>
             </div>
          </div>
-
+         <div class="col-md-3">
+            <div class="card movie-card">
+               <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png"
+                  class="card-img-top movie-img" alt="hook poster">
+               <div class="card-body">
+                  <h5 class="card-title">Hook - Suggested by <span id="suggested-by">Amber</span></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                     card's content.</p>
+                  <div class="text-center">
+                     <button class="btn btn-primary">Vote for Hook</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card movie-card">
+               <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png"
+                  class="card-img-top movie-img" alt="hook poster">
+               <div class="card-body">
+                  <h5 class="card-title">Hook - Suggested by <span id="suggested-by">Amber</span></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                     card's content.</p>
+                  <div class="text-center">
+                     <button class="btn btn-primary">Vote for Hook</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card movie-card">
+               <img src="https://upload.wikimedia.org/wikipedia/en/0/0e/Hook_poster_transparent.png"
+                  class="card-img-top movie-img" alt="hook poster">
+               <div class="card-body">
+                  <h5 class="card-title">Hook - Suggested by <span id="suggested-by">Amber</span></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                     card's content.</p>
+                  <div class="text-center">
+                     <button class="btn btn-primary">Vote for Hook</button>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
 
       <div class="row mt-3">
-         <!-- Display Results -->
+         <!-- Voting Results -->
          <div class="col-md-6">
             <div class="card">
                <div class="card-body">
@@ -64,13 +106,13 @@
                      <div class="form-group">
                         <label for="movie-input">Movie Title</label>
                         <input type="text" class="form-control" id="movie-input" aria-describedby="movie input">
-                        <small id="movie-help" class="form-text text-muted">Movie needs to be on Netflix.</small>
+                        <small id="movie-help" class="form-text text-muted">This uses OMDB, so please make sure the movie is on netflix.</small>
                      </div>
                      <div class="form-group">
                         <label for="suggested-by">Who is suggesting this?</label>
                         <input type="text" class="form-control" id="suggested-by">
                      </div>
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <button class="btn btn-primary" id="submit-movie-suggestion">Submit</button>
                   </form>
                </div>
             </div>
