@@ -28,7 +28,7 @@ $(document).ready(function() {
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      // console.log(response);
       
       // Send the relevant data from omdb to firebase along with suggestBy
       // Creates local "temporary" object for holding train data
@@ -36,7 +36,8 @@ $(document).ready(function() {
         title: movie,
         suggestedBy: suggestedBy,
         image: response.Poster,
-        synopsis: response.Plot
+        synopsis: response.Plot,
+        numVotes: 0
       };
 
       // Uploads train data to the database
@@ -55,7 +56,7 @@ $(document).ready(function() {
     });
   });
 
-  movieData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+  movieData.ref().on("child_added", function(childSnapshot) {
     
     console.log(childSnapshot.val());
     // store all the data from the db as a variable
@@ -63,6 +64,7 @@ $(document).ready(function() {
     const suggestedBy = childSnapshot.val().suggestedBy
     const image = childSnapshot.val().image
     const synopsis = childSnapshot.val().synopsis
+    const votes = childSnapshot.val().numVotes
 
     // Build the html components with the data from the db
     //  the column
@@ -90,6 +92,12 @@ $(document).ready(function() {
     column.append(card);
     $("#choices-row").append(column);
    
+    // add the title to the voting list display
+    const voteDisplay = $("<h5>");
+    const titleSpan = $("<span>").text(title + ": ");
+    const voteCount = $("<span>").text(votes);
+    voteDisplay.append(titleSpan).append(voteCount);
+    $("#vote-display").append(voteDisplay);
   });
 
   //      a.addClass("movie-btn");
