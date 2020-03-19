@@ -12,6 +12,7 @@ $(document).ready(function() {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const movieData = firebase.database();
+  const totalVotes = [];
 
   $("#submit-movie-suggestion").click(function(e) {
     // prevent the page from reloading
@@ -29,7 +30,7 @@ $(document).ready(function() {
       method: "GET"
     }).then(function(response) {
       // console.log(response);
-      
+
       // Send the relevant data from omdb to firebase along with suggestBy
       // Creates local "temporary" object for holding train data
       const newMovie = {
@@ -46,7 +47,7 @@ $(document).ready(function() {
       // Logs everything to console
       console.log(newMovie.title);
       console.log(newMovie.suggestedBy);
-      console.log(newMovie.posterImg);
+      console.log(newMovie.image);
       console.log(newMovie.synopsis);
       // Clears all of the text-boxes
       $("#movie-input").val("");
@@ -57,22 +58,23 @@ $(document).ready(function() {
   });
 
   movieData.ref().on("child_added", function(childSnapshot) {
-    
     console.log(childSnapshot.key);
     // store all the data from the db as a variable
-    const title = childSnapshot.val().title
-    const suggestedBy = childSnapshot.val().suggestedBy
-    const image = childSnapshot.val().image
-    const synopsis = childSnapshot.val().synopsis
-    const votes = childSnapshot.val().numVotes
-    const key = childSnapshot.key
+    const title = childSnapshot.val().title;
+    const suggestedBy = childSnapshot.val().suggestedBy;
+    const image = childSnapshot.val().image;
+    const synopsis = childSnapshot.val().synopsis;
+    const votes = childSnapshot.val().numVotes;
+    const key = childSnapshot.key;
     // Build the html components with the data from the db
     //  the column
     const column = $("<div>").addClass("col-md-3");
     //  the div.card
     const card = $("<div>").addClass("card");
     //  the img tag
-    const img = $("<img>").addClass("card-img-top").attr("src", image)
+    const img = $("<img>")
+      .addClass("card-img-top")
+      .attr("src", image);
     //  the card body div
     const cardBody = $("<div>").addClass("card-body");
     //  the h5 for the title
@@ -82,35 +84,57 @@ $(document).ready(function() {
     //  div to center the button
     const centerTheText = $("<div>").addClass("text-center");
     //  btn
-    const voteBtn = $("<button>").addClass("btn btn-primary vote-btn").text("Click to Vote");
-    voteBtn.attr("data-key", key)
+    const voteBtn = $("<button>")
+      .addClass("btn btn-primary vote-btn")
+      .text("Click to Vote");
+    voteBtn.attr("data-key", key);
     // need to add some unique identifier to each button for voting logic
 
     // add the elements to the page
-    cardBody.append(movieTitle).append(movieSynopsis).append(centerTheText);
+    cardBody
+      .append(movieTitle)
+      .append(movieSynopsis)
+      .append(centerTheText);
     centerTheText.append(voteBtn);
     card.append(img).append(cardBody);
     column.append(card);
     $("#choices-row").append(column);
-   
+
     // add the title to the voting list display
     const voteDisplay = $("<h5>");
     const titleSpan = $("<span>").text(title + ": ");
     const voteCount = $("<span>").text(votes);
+    voteCount.addClass(key)
     voteDisplay.append(titleSpan).append(voteCount);
     $("#vote-display").append(voteDisplay);
-
+    // add the movie and number of votes to an array so that they can be updated on click.
+    const movieObj = {
+      key: key,
+      votes: votes
+    };
+    totalVotes.push(movieObj);
+    console.log(totalVotes);
   });
 
   // listen for vote-btn click
   $(document).on("click", ".vote-btn", function() {
-    let key = $(this).data("key")
-    console.log(movieData.ref(key))
-    
-  }) 
+    alert('Clicked!')
+    let key = $(this).data("key");
+    for (i = 0; i < totalVotes.length; i++) {
+      if (totalVotes[i].key === key) {
+        const updatedVoteCount = totalVotes[i].votes + 1;
+        // update the DB
+        movieData
+          .ref()
+          .child(key)
+          .update({ numVotes: updatedVoteCount })
+        // update the UI and the global var obj
+        totalVotes[i].votes = updatedVoteCount
+        $("." + key).text(updatedVoteCount)
+        break;
+      }
+    }
+  });
 
-  
 
 });
-
-
