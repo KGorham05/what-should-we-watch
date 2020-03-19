@@ -35,7 +35,7 @@ $(document).ready(function() {
       const newMovie = {
         title: movie,
         suggestedBy: suggestedBy,
-        posterImg: response.Poster,
+        image: response.Poster,
         synopsis: response.Plot
       };
 
@@ -47,92 +47,51 @@ $(document).ready(function() {
       console.log(newMovie.suggestedBy);
       console.log(newMovie.posterImg);
       console.log(newMovie.synopsis);
+      // Clears all of the text-boxes
       $("#movie-input").val("");
       $("#who-suggested").val("");
       // Alert
       alert("Movie successfully added");
-
-      // Clears all of the text-boxes
-      
     });
   });
 
-//   function displayMovies() {
-//     // create the column
-//     const column = $("<div>").addClass("col-md-3");
-//     // Create the div.card
-//     const card = $("<div>").addClass("card");
-//     // Create the img tag
-//     const img = $("<img>").addClass("card-img-top");
-//     // Create the card body div
-//     const cardBody = $("<div>").addClass("card-body");
-//     // create the h5 for the title
-//     const movieTitleHeading = $("<h5>");
-//     // Create the p tag for short synopsis
-//     const movieSynopsisDisplay = $("<p>");
-//     // Create div to center the button
-//     const centerTheText = $("<div>").addClass("text-center");
-//     // Create btn
-//     const voteBtn = $("<button>").addClass("btn btn-primary");
-//     // need to add some unique identifier to each button for voting logic
+  movieData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+    
+    console.log(childSnapshot.val());
+    // store all the data from the db as a variable
+    const title = childSnapshot.val().title
+    const suggestedBy = childSnapshot.val().suggestedBy
+    const image = childSnapshot.val().image
+    const synopsis = childSnapshot.val().synopsis
 
-//     // set the values of these components to pieces pulled from the ajax response
+    // Build the html components with the data from the db
+    //  the column
+    const column = $("<div>").addClass("col-md-3");
+    //  the div.card
+    const card = $("<div>").addClass("card");
+    //  the img tag
+    const img = $("<img>").addClass("card-img-top").attr("src", image)
+    //  the card body div
+    const cardBody = $("<div>").addClass("card-body");
+    //  the h5 for the title
+    const movieTitle = $("<h5>").html(title + " - Suggested By " + suggestedBy);
+    //  the p tag for short synopsis
+    const movieSynopsis = $("<p>").text(synopsis);
+    //  div to center the button
+    const centerTheText = $("<div>").addClass("text-center");
+    //  btn
+    const voteBtn = $("<button>").addClass("btn btn-primary").text("Click to Vote");
+    // need to add some unique identifier to each button for voting logic
 
-//     // Creating a div to hold the movie
-//     //  var movieDiv = $("<div class='movie'>");
+    // add the elements to the page
+    cardBody.append(movieTitle).append(movieSynopsis).append(centerTheText);
+    centerTheText.append(voteBtn);
+    card.append(img).append(cardBody);
+    column.append(card);
+    $("#choices-row").append(column);
+   
+  });
 
-//     // Storing the rating data
-//     //  var rating = response.Rated;
-
-//     // Creating an element to have the rating displayed
-//     //  var pOne = $("<p>").text("Rating: " + rating);
-
-//     // Displaying the rating
-//     //  movieDiv.append(pOne);
-
-//     // Storing the release year
-//     //  var released = response.Released;
-
-//     // Creating an element to hold the release year
-//     //  var pTwo = $("<p>").text("Released: " + released);
-
-//     // Displaying the release year
-//     //  movieDiv.append(pTwo);
-
-//     // Storing the plot
-//     //  var plot = response.Plot;
-
-//     // Creating an element to hold the plot
-//     //  var pThree = $("<p>").text("Plot: " + plot);
-
-//     // Appending the plot
-//     //  movieDiv.append(pThree);
-
-//     // Retrieving the URL for the image
-//     var imgURL = response.Poster;
-
-//     // Creating an element to hold the image
-//     //  var image = $("<img>").attr("src", imgURL);
-
-//     // Appending the image
-//     //  movieDiv.append(image);
-
-//     // Putting the entire movie above the previous movies
-//     //  $("#movies-view").prepend(movieDiv);
-//   }
-
-  // Function for displaying movie data
-  //  function renderButtons() {
-  //    // Deleting the movies prior to adding new movies
-  //    // (this is necessary otherwise you will have repeat buttons)
-  //    $("#buttons-view").empty();
-
-  //    // Looping through the array of movies
-  //    for (var i = 0; i < movies.length; i++) {
-  //      // Then dynamicaly generating buttons for each movie in the array
-  //      // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-  //      var a = $("<button>");
-  //      // Adding a class of movie-btn to our button
   //      a.addClass("movie-btn");
   //      // Adding a data-attribute
   //      a.attr("data-name", movies[i]);
@@ -145,7 +104,7 @@ $(document).ready(function() {
 });
 
 // 4. Create Firebase event for adding trains to the database and a row in the html when a user adds an entry
-// trainData.ref().on("child_added", function(childSnapshot, prevChildKey) {
+
 //   console.log(childSnapshot.val());
 
 //   // Store everything into a variable.
