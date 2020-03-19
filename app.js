@@ -118,7 +118,7 @@ $(document).ready(function() {
 
   // listen for vote-btn click
   $(document).on("click", ".vote-btn", function() {
-    alert('Clicked!')
+    alert('Thanks for your vote!')
     let key = $(this).data("key");
     for (i = 0; i < totalVotes.length; i++) {
       if (totalVotes[i].key === key) {
