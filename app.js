@@ -58,14 +58,14 @@ $(document).ready(function() {
 
   movieData.ref().on("child_added", function(childSnapshot) {
     
-    console.log(childSnapshot.val());
+    console.log(childSnapshot.key);
     // store all the data from the db as a variable
     const title = childSnapshot.val().title
     const suggestedBy = childSnapshot.val().suggestedBy
     const image = childSnapshot.val().image
     const synopsis = childSnapshot.val().synopsis
     const votes = childSnapshot.val().numVotes
-
+    const key = childSnapshot.key
     // Build the html components with the data from the db
     //  the column
     const column = $("<div>").addClass("col-md-3");
@@ -82,7 +82,8 @@ $(document).ready(function() {
     //  div to center the button
     const centerTheText = $("<div>").addClass("text-center");
     //  btn
-    const voteBtn = $("<button>").addClass("btn btn-primary").text("Click to Vote");
+    const voteBtn = $("<button>").addClass("btn btn-primary vote-btn").text("Click to Vote");
+    voteBtn.attr("data-key", key)
     // need to add some unique identifier to each button for voting logic
 
     // add the elements to the page
@@ -98,64 +99,18 @@ $(document).ready(function() {
     const voteCount = $("<span>").text(votes);
     voteDisplay.append(titleSpan).append(voteCount);
     $("#vote-display").append(voteDisplay);
+
   });
 
-  //      a.addClass("movie-btn");
-  //      // Adding a data-attribute
-  //      a.attr("data-name", movies[i]);
-  //      // Providing the initial button text
-  //      a.text(movies[i]);
-  //      // Adding the button to the buttons-view div
-  //      $("#buttons-view").append(a);
-  //    }
-  //  }
+  // listen for vote-btn click
+  $(document).on("click", ".vote-btn", function() {
+    let key = $(this).data("key")
+    console.log(movieData.ref(key))
+    
+  }) 
+
+  
+
 });
 
-// 4. Create Firebase event for adding trains to the database and a row in the html when a user adds an entry
 
-//   console.log(childSnapshot.val());
-
-//   // Store everything into a variable.
-//   var tName = childSnapshot.val().name;
-//   var tDestination = childSnapshot.val().destination;
-//   var tFrequency = childSnapshot.val().frequency;
-//   var tFirstTrain = childSnapshot.val().firstTrain;
-
-//   var timeArr = tFirstTrain.split(":");
-//   var trainTime = moment()
-//     .hours(timeArr[0])
-//     .minutes(timeArr[1]);
-//   var maxMoment = moment.max(moment(), trainTime);
-//   var tMinutes;
-//   var tArrival;
-
-//   // If the first train is later than the current time, sent arrival to the first train time
-//   if (maxMoment === trainTime) {
-//     tArrival = trainTime.format("hh:mm A");
-//     tMinutes = trainTime.diff(moment(), "minutes");
-//   } else {
-//     // Calculate the minutes until arrival using hardcore math
-//     // To calculate the minutes till arrival, take the current time in unix subtract the FirstTrain time
-//     // and find the modulus between the difference and the frequency.
-//     var differenceTimes = moment().diff(trainTime, "minutes");
-//     var tRemainder = differenceTimes % tFrequency;
-//     tMinutes = tFrequency - tRemainder;
-//     // To calculate the arrival time, add the tMinutes to the current time
-//     tArrival = moment()
-//       .add(tMinutes, "m")
-//       .format("hh:mm A");
-//   }
-//   console.log("tMinutes:", tMinutes);
-//   console.log("tArrival:", tArrival);
-
-//   // Add each train's data into the table
-//   $("#train-table > tbody").append(
-//     $("<tr>").append(
-//       $("<td>").text(tName),
-//       $("<td>").text(tDestination),
-//       $("<td>").text(tFrequency),
-//       $("<td>").text(tArrival),
-//       $("<td>").text(tMinutes)
-//     )
-//   );
-// });
