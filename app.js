@@ -110,10 +110,13 @@ $(document).ready(function() {
     // add the movie and number of votes to an array so that they can be updated on click.
     const movieObj = {
       key: key,
-      votes: votes
+      votes: votes,
+      title: title
     };
     totalVotes.push(movieObj);
     console.log(totalVotes);
+
+    figureOutWhatsNext(totalVotes);
   });
 
   // listen for vote-btn click
@@ -136,5 +139,20 @@ $(document).ready(function() {
     }
   });
 
+  const figureOutWhatsNext = function(arr) {
+    let mostVotes = 0;
+    let chosenFilm = "";
+    console.log(arr)
+    for (i = 0; i < arr.length; i++) {
+      if (arr[i].votes > mostVotes) {
+        mostVotes = arr[i].votes;
+        chosenFilm = arr[i].title;
+      }
+    }
+    console.log("Chosen film: " + chosenFilm)
+    $("#upcoming-movie").text(chosenFilm);
 
+  }
+
+  
 });
