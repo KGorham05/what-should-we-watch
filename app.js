@@ -139,6 +139,14 @@ $(document).ready(function() {
     }
   });
 
+  $("#rsvp-btn").click(() => {
+    $("#rsvp-modal").modal('toggle')
+  })
+
+  $("#send-rsvp").click(() => {
+    $("#rsvp-modal").modal('toggle')
+  })
+
   const figureOutWhatsNext = function(arr) {
     let mostVotes = 0;
     let chosenFilm = "";
