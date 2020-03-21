@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Configure Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCqKTF0CNOTC5nJFuKiFaTaea4-9WRm15I",
@@ -11,10 +11,14 @@ $(document).ready(function() {
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
+
+  // Global Variables
   const movieData = firebase.database();
   const totalVotes = [];
+  const whosComing = [];
 
-  $("#submit-movie-suggestion").click(function(e) {
+  // Submit a movie button
+  $("#submit-movie-suggestion").click(function (e) {
     // prevent the page from reloading
     e.preventDefault();
     const movie = $("#movie-input")
@@ -28,7 +32,7 @@ $(document).ready(function() {
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then(function(response) {
+    }).then(function (response) {
       // console.log(response);
 
       // Send the relevant data from omdb to firebase along with suggestBy
@@ -42,7 +46,7 @@ $(document).ready(function() {
       };
 
       // Uploads train data to the database
-      movieData.ref().push(newMovie);
+      movieData.ref("movies").push(newMovie);
 
       // Logs everything to console
       console.log(newMovie.title);
@@ -57,8 +61,8 @@ $(document).ready(function() {
     });
   });
 
-  movieData.ref().on("child_added", function(childSnapshot) {
-    console.log(childSnapshot.key);
+  // display the movies on the page
+  movieData.ref("movies").on("child_added", function (childSnapshot) {
     // store all the data from the db as a variable
     const title = childSnapshot.val().title;
     const suggestedBy = childSnapshot.val().suggestedBy;
@@ -120,7 +124,7 @@ $(document).ready(function() {
   });
 
   // listen for vote-btn click
-  $(document).on("click", ".vote-btn", function() {
+  $(document).on("click", ".vote-btn", function () {
     alert('Thanks for your vote!')
     let key = $(this).data("key");
     for (i = 0; i < totalVotes.length; i++) {
@@ -128,7 +132,7 @@ $(document).ready(function() {
         const updatedVoteCount = totalVotes[i].votes + 1;
         // update the DB
         movieData
-          .ref()
+          .ref("movies")
           .child(key)
           .update({ numVotes: updatedVoteCount })
         // update the UI and the global var obj
@@ -139,28 +143,46 @@ $(document).ready(function() {
     }
   });
 
+  // opens the rsvp modal
   $("#rsvp-btn").click(() => {
     $("#rsvp-modal").modal('toggle')
   })
 
+  // sends the rsvp to the db, updates the page
   $("#send-rsvp").click(() => {
     $("#rsvp-modal").modal('toggle')
+    const nameOfRSVP = $("#rsvp-input").val().trim()
+    movieData.ref("users").push({ person: nameOfRSVP });
   })
 
-  const figureOutWhatsNext = function(arr) {
+  // listen for new RSVPS, and also on page load 
+  movieData.ref("users").on("child_added", function (childSnapshot) {
+    const person = childSnapshot.val().person;
+    console.log("Person: " + person)
+    whosComing.push(person);
+    displayRSVPs();
+  })
+
+  // Display the list of people who have RSVPd
+  const displayRSVPs = () => {
+    const listOfNames = whosComing.join(", ");
+    $("#rsvp-list").text(listOfNames);
+  }
+
+  // whichever movie has the highest votes, display as upcoming film
+  const figureOutWhatsNext = function (arr) {
     let mostVotes = 0;
     let chosenFilm = "";
-    console.log(arr)
     for (i = 0; i < arr.length; i++) {
       if (arr[i].votes > mostVotes) {
         mostVotes = arr[i].votes;
         chosenFilm = arr[i].title;
       }
     }
-    console.log("Chosen film: " + chosenFilm)
+
     $("#upcoming-movie").text(chosenFilm);
 
   }
 
-  
+
 });
