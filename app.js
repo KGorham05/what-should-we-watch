@@ -153,6 +153,7 @@ $(document).ready(function () {
     $("#rsvp-modal").modal('toggle')
     const nameOfRSVP = $("#rsvp-input").val().trim()
     movieData.ref("users").push({ person: nameOfRSVP });
+    rsvp-input.val("");
   })
 
   // listen for new RSVPS, and also on page load 
