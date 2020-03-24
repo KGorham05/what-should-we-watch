@@ -31,6 +31,7 @@ $(document).ready(function () {
         $("#un-modal").modal('toggle');
     });
 
+    window.location.hash = '#m';
 
     // Chat room logic
     $("#m-send").click(function (e) {
@@ -64,6 +65,7 @@ $(document).ready(function () {
         // scroll to the bottom
         const messageDiv = $('#messages');
 
+        scrollToBottom();
     });
 
 
