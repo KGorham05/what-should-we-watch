@@ -117,6 +117,7 @@ $(document).ready(function () {
       votes: votes,
       title: title
     };
+    
     totalVotes.push(movieObj);
     console.log(totalVotes);
 
@@ -185,5 +186,6 @@ $(document).ready(function () {
 
   }
 
+  
 
 });
