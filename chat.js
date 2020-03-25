@@ -78,7 +78,7 @@ $(document).ready(function() {
     const message = $("<p class='message-text'>").text(mText);
 
     chatBubble.append(nameStamp);
-    nameStamp.append(message);
+    chatBubble.append(message);
 
     $("#messages").append(chatBubble);
 
