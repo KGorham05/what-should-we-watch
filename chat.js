@@ -15,6 +15,8 @@ $(document).ready(function() {
   // Global Variables
   const movieData = firebase.database();
   let currentUser = "";
+  const colorArr = ["#A800FF", "#0079FF", "#00F11D", "#FF7F00", "#FF0900"]
+  let currentColor = 0;
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
   $("#un-submit").click(function() {
@@ -76,6 +78,14 @@ $(document).ready(function() {
     const chatBubble = $("<div class='chat-bubble'>");
     const nameStamp = $("<p class='name-stamp'>").text(name);
     const message = $("<p class='message-text'>").text(mText);
+    // add alternating colors to users who join
+    nameStamp.attr('style', `color: ${colorArr[currentColor]}`)
+    // increment currentColor counter so color changes with next message
+    currentColor++
+    // prevent counter from going over 5
+    if (currentColor === 5) {
+        currentColor = 0
+    }
 
     chatBubble.append(nameStamp);
     chatBubble.append(message);

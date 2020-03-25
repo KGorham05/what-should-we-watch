@@ -17,7 +17,23 @@
     padding-left: 10px;
 }
 
+.chat-bubble {
+    border: solid black 1px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
 
+.name-stamp {
+    padding-top: 5px;
+    padding-left: 10px;
+    margin-bottom: 0px;
+}
+
+.message-text {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
 
 @media screen and (max-width: 600px) {
     .messages-area {
@@ -26,24 +42,6 @@
      
      #messages {
         padding-left: 0px;
-    }
-
-    .chat-bubble {
-        border: solid black 1px;
-        border-radius: 5px;
-        margin-top: 5px;
-    }
-
-    .name-stamp {
-        padding-top: 5px;
-        padding-left: 10px;
-        margin-bottom: 0px;
-    }
-
-    .message-text {
-    padding-left: 10px;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
     }
 
 } 
