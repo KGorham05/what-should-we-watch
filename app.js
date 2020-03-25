@@ -74,7 +74,7 @@ $(document).ready(function () {
     //  the column
     const column = $("<div>").addClass("col-md-3");
     //  the div.card
-    const card = $("<div>").addClass("card");
+    const card = $("<div>").addClass("card shadow mb-3");
     //  the img tag
     const img = $("<img>")
       .addClass("card-img-top")
