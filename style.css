@@ -4,11 +4,11 @@
 }
 
 .messages-area {
-   height: 90vh;
+   height: 95vh;
    overflow-x: hidden;
    overflow-y: scroll;
 }
 
-.message-input {
-   height: 10vh
+#m {
+    height: 40px;
 }
