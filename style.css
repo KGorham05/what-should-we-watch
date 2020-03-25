@@ -12,3 +12,9 @@
 #m {
     height: 40px;
 }
+
+@media screen and (max-width: 600px) {
+    .messages-area {
+        height: 87vh;
+     }
+} 
