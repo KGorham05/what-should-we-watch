@@ -9,7 +9,9 @@
    overflow-y: scroll;
 }
 
-
+.jumbotron {
+    margin-top:40px;
+}
 
 
 #m {
