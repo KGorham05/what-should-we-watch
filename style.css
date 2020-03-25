@@ -1,0 +1,14 @@
+.chat-room {
+   height: 100vh;
+   
+}
+
+.messages-area {
+   height: 90vh;
+   overflow-x: hidden;
+   overflow-y: scroll;
+}
+
+.message-input {
+   height: 10vh
+}
