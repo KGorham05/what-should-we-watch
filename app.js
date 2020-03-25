@@ -45,7 +45,7 @@ $(document).ready(function () {
         numVotes: 0
       };
 
-      // Uploads train data to the database
+      // Uploads train data to the datgit abase
       movieData.ref("movies").push(newMovie);
 
       // Logs everything to console
