@@ -1,6 +1,5 @@
 .chat-room {
-   height: 100vh;
-   
+   height: 100vh; 
 }
 
 .messages-area {
@@ -19,9 +18,9 @@
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
 }
 
-#rsvp-btn {
+/* #rsvp-btn {
     
-}
+} */
 
 #m {
     height: 40px;
