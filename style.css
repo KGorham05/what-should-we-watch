@@ -18,9 +18,9 @@
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
 }
 
-/* #rsvp-btn {
-    
-} */
+#upcoming-movie {
+    text-transform: capitalize;
+}
 
 #m {
     height: 40px;

@@ -182,6 +182,7 @@ $(document).ready(function () {
       }
     }
 
+    chosenFilm = chosenFilm.toUpperCase();
     $("#upcoming-movie").text(chosenFilm);
 
   }
