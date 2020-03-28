@@ -8,9 +8,7 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
    <link rel="stylesheet" href="./style.css">
-   <!-- Google Fonts -->
-   <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-
+   <link rel="stylesheet" href="./marquee.css">
    <title>Quarantine Movie Club</title>
 </head>
 
@@ -22,61 +20,55 @@
    <!-- TODO: Change Color Pallet -->
    <!-- TODO: Add Parallax Background -->
    <!-- TODO: Add User Authentication, Votes reset each week, certain number of voting tokens, more movies you watch the more tokens you get -->
-   
+
+   <div class="row">
+      <div class="col-12">
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark bottom-shadow">
+            <a class="navbar-brand" href="#">QMC</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                     <a class="nav-link active" href="#choices-row">Vote</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active" href="#vote-display">Results</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active" href="#suggest-a-movie">Suggest</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link active" href="./chat.html">Chat</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Watch Live</a>
+                  </li>
+               </ul>
+            </div>
+         </nav>
+      </div>
+   </div>
+
    <div class="container-fluid">
-      
-      <!-- Nav -->
-      <div class="row">
-         <div class="col-12">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top bottom-shadow">
-               <a class="navbar-brand" href="#">QMC</a>
-               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-               </button>
-
-               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                     <li class="nav-item">
-                        <a class="nav-link active" href="#choices-row">Vote</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link active" href="#vote-display">Results</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link active" href="#suggest-a-movie">Suggest</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link active" href="./chat.html">Chat</a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Watch Live</a>
-                     </li>
-                  </ul>
-               </div>
-            </nav>
-         </div>
-      </div>
-
-      <!-- Hero Div -->
-      <div class="row">
-         <div class="col-12">
-
-         </div>
-      </div>
 
       <!-- Header -->
       <div class="row">
-         <div class="col-12">
-            <div class="jumbotron text-center shadow">
-               <h1>😷 Quarantine Movie Club 😷</h1>
-               <hr class="my-4">
-               <h2>Current Leader: <span id="upcoming-movie"></span></h2>
-               <h2 class="mt-3">Showtime: <span id="showtime">Friday 4/3/20 at 8:00 PM PST</span></h2>
-               <h3 class="mt-4">RSVP List: <span id="rsvp-list"></span></h3>
-               <button id="rsvp-btn" class="btn btn-primary mt-4">RSVP Here!
-                  </button>
-            </div>
+         <div id="hero" class="col-12 text-center shadow">
+            <h1 class="hero-title">☣️ Secret Quarantine Movie Club ☣️</h1>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-sm-12">
+            <ul id="m-ul" class="black">
+               <li id="m-li"><span id="upcoming-movie" class="cap-it"></span></li>
+               <li id="m-li"><span>FRIDAY</span> <span>8:00</span></li>
+               <li id="m-li"><span>3/27/20</span></li>
+            </ul>
+            <h2></h2>
          </div>
       </div>
 

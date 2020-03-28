@@ -1,3 +1,16 @@
+#hero {
+    background-color: #363636;
+    color: yellow;
+    
+    margin-bottom: 50px;
+    padding-top: 75px;
+    padding-bottom: 75px;
+}
+
+.hero-title {
+    font-size: 58px;
+}
+/* Chat room logic + more - Need to split up into 2 docs */
 .chat-room {
    height: 100vh; 
 }
@@ -18,9 +31,9 @@
     box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.75);
 }
 
-/* #rsvp-btn {
-    
-} */
+#upcoming-movie {
+    text-transform: capitalize;
+}
 
 #m {
     height: 40px;
