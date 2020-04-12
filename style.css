@@ -1,5 +1,6 @@
 body {
     background: beige;
+    font-family: montserrat;
 }
 
 #hero {
@@ -41,6 +42,21 @@ body {
 
 .movie-title {
     font-weight: 700;
+}
+
+.year {
+    color: blue;
+}
+
+.year-and-genre, .ratings {
+    margin-bottom: 2px;
+}
+
+.plot {
+    /* font-weight: 600; */
+    /* font-size: 18px; */
+    margin-top: 5px;
+    font-style: italic;
 }
 
 /* Chat */

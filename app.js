@@ -38,7 +38,21 @@ $(document).ready(function () {
 
       // Send the relevant data from omdb to firebase along with suggestBy
       // Creates local "temporary" object for holding train data
+
+      // Ratings":[{"Source":"Rotten Tomatoes","Value":"82%"}]
+      let tomatoes;
+
+      for (var i = 0; i < response.Ratings.length; i++) {
+        if (response.Ratings[i].Source === "Rotten Tomatoes") {
+          tomatoes = response.Ratings[i].Value;
+        }
+      }
+
       const newMovie = {
+        year: response.Year,
+        genre: response.Genre,
+        imdbRating: response.imdbRating,
+        tomatoes: tomatoes,
         title: movie,
         streaming: streaming,
         image: response.Poster,
@@ -46,13 +60,9 @@ $(document).ready(function () {
         numVotes: 0
       };
 
-      // Uploads train data to the datgit abase
+      // Uploads movie data to firebase
       movieData.ref("movies").push(newMovie);
 
-      // Logs everything to console
-      console.log(newMovie.title);
-      console.log(newMovie.image);
-      console.log(newMovie.synopsis);
       // Clears all of the text-boxes
       $("#movie-input").val("");
       $("#who-suggested").val("");
@@ -69,23 +79,31 @@ $(document).ready(function () {
     const image = childSnapshot.val().image;
     const synopsis = childSnapshot.val().synopsis;
     const votes = childSnapshot.val().numVotes;
-    const stream = childSnapshot.val().streaming
+    const stream = childSnapshot.val().streaming;
+    const year = childSnapshot.val().year;
+    const genre = childSnapshot.val().genre;
+    const tomatoes = childSnapshot.val().tomatoes;
+    const imdbRating = childSnapshot.val().imdbRating;
     const key = childSnapshot.key;
     // Build the html components with the data from the db
     //  the column
     const column = $("<div>").addClass("col-md-3");
     //  the div.card
-    const card = $("<div>").addClass("card shadow mb-3");
+    const card = $("<div>").addClass("card shadow mb-3 movie");
     //  the img tag
     const img = $("<img>")
       .addClass("card-img-top")
       .attr("src", image);
     //  the card body div
-    const cardBody = $("<div>").addClass("card-body");
+    const cardBody = $("<div>").addClass("card-body movie-info");
     //  the h5 for the title
     const movieTitle = $("<h5 class='movie-title'>").html(title + " - " + stream);
+    // Year + Genre
+    const yearAndGenre = $("<p class='year-and-genre'>").html(`<span class="year">(${year})</span> ${genre}`);
+    // Ratings (IMBD + Tomatoes)
+    const ratings = $("<p class='ratings'>").text(`IMBD: ${imdbRating} Tomatoes: ${tomatoes}`);
     //  the p tag for short synopsis
-    const movieSynopsis = $("<p>").text(synopsis);
+    const movieSynopsis = $("<p class='plot'>").text(synopsis);
     //  div to center the button
     const centerTheText = $("<div>").addClass("text-center");
     //  btn
@@ -98,6 +116,8 @@ $(document).ready(function () {
     // add the elements to the page
     cardBody
       .append(movieTitle)
+      .append(yearAndGenre)
+      .append(ratings)
       .append(movieSynopsis)
       .append(centerTheText);
     centerTheText.append(voteBtn);
@@ -187,7 +207,6 @@ $(document).ready(function () {
     $("#upcoming-movie").text(chosenFilm);
 
   }
-
 
 
 });
