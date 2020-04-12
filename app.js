@@ -24,22 +24,23 @@ $(document).ready(function () {
     const movie = $("#movie-input")
       .val()
       .trim();
-    const suggestedBy = $("#who-suggested")
+    const streaming = $("#streaming-input")
       .val()
       .trim();
     var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
+
     // Creating an AJAX call for the specific movie button being clicked
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-      // console.log(response);
+      console.log(response);
 
       // Send the relevant data from omdb to firebase along with suggestBy
       // Creates local "temporary" object for holding train data
       const newMovie = {
         title: movie,
-        suggestedBy: suggestedBy,
+        streaming: streaming,
         image: response.Poster,
         synopsis: response.Plot,
         numVotes: 0
@@ -50,12 +51,12 @@ $(document).ready(function () {
 
       // Logs everything to console
       console.log(newMovie.title);
-      console.log(newMovie.suggestedBy);
       console.log(newMovie.image);
       console.log(newMovie.synopsis);
       // Clears all of the text-boxes
       $("#movie-input").val("");
       $("#who-suggested").val("");
+      $("#streaming-input").val("");
       // Alert
       alert("Movie successfully added");
     });
@@ -65,10 +66,10 @@ $(document).ready(function () {
   movieData.ref("movies").on("child_added", function (childSnapshot) {
     // store all the data from the db as a variable
     const title = childSnapshot.val().title;
-    const suggestedBy = childSnapshot.val().suggestedBy;
     const image = childSnapshot.val().image;
     const synopsis = childSnapshot.val().synopsis;
     const votes = childSnapshot.val().numVotes;
+    const stream = childSnapshot.val().streaming
     const key = childSnapshot.key;
     // Build the html components with the data from the db
     //  the column
@@ -82,7 +83,7 @@ $(document).ready(function () {
     //  the card body div
     const cardBody = $("<div>").addClass("card-body");
     //  the h5 for the title
-    const movieTitle = $("<h5>").html(title + " - Suggested By " + suggestedBy);
+    const movieTitle = $("<h5 class='movie-title'>").html(title + " - " + stream);
     //  the p tag for short synopsis
     const movieSynopsis = $("<p>").text(synopsis);
     //  div to center the button
@@ -117,7 +118,7 @@ $(document).ready(function () {
       votes: votes,
       title: title
     };
-    
+
     totalVotes.push(movieObj);
     console.log(totalVotes);
 
@@ -154,7 +155,7 @@ $(document).ready(function () {
     $("#rsvp-modal").modal('toggle')
     const nameOfRSVP = $("#rsvp-input").val().trim()
     movieData.ref("users").push({ person: nameOfRSVP });
-    rsvp-input.val("");
+    rsvp - input.val("");
   })
 
   // listen for new RSVPS, and also on page load 
@@ -187,6 +188,6 @@ $(document).ready(function () {
 
   }
 
-  
+
 
 });
