@@ -34,16 +34,6 @@ body {
     text-shadow: 2px 2px black;
     font-size: 36px;
 }
-/* Chat room logic + more - Need to split up into 2 docs */
-.chat-room {
-   height: 100vh; 
-}
-
-.messages-area {
-   height: 95vh;
-   overflow-x: hidden;
-   overflow-y: scroll;
-}
 
 .jumbotron {
     margin-top:40px;
@@ -57,6 +47,12 @@ body {
 
 #upcoming-movie {
     text-transform: capitalize;
+}
+
+/* Card Styling */
+
+.max-50 {
+    max-width: 50%;
 }
 
 .movie-title {
@@ -77,6 +73,19 @@ body {
     margin-top: 5px;
     font-style: italic;
 }
+
+/* Chat room logic + more - Need to split up into 2 docs */
+.chat-room {
+   height: 100vh; 
+}
+
+.messages-area {
+   height: 95vh;
+   overflow-x: hidden;
+   overflow-y: scroll;
+}
+
+
 
 /* Chat */
 #m {

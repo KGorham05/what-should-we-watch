@@ -14,12 +14,9 @@
 <body>
 
    <!-- TODO: Add a section to display what we've watched so far, where people can rate the film -->
-   <!-- TODO: Add a "View more details" button/link that opens a modal with more movie info, embeds the trailer if possible -->
-   <!-- TODO: Rearrange Page elements and create a "scoreboard" -->
-   <!-- TODO: Change Color Pallet -->
-   <!-- TODO: Add Parallax Background -->
-   <!-- TODO: Add User Authentication, Votes reset each week, certain number of voting tokens, more movies you watch the more tokens you get -->
-
+   <!-- Add user authentication -->
+   <!-- Limit voting using local storage -->
+   <!-- Update card layout  -->
 
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bottom-shadow">
       <a class="navbar-brand red-shad" href="#">Quarantine Movie Club</a>
@@ -62,21 +59,36 @@
             <div></div>
          </div>
       </div>
-      <!-- <div class="row">
-         <div class="col-12">
-            <ul id="m-ul" class="black">
-               <li id="m-li"><span id="upcoming-movie" class="cap-it"></span></li>
-               <li id="m-li"><span>FRIDAY</span> <span>7:00 PM</span></li>
-               <li id="m-li"><span>4/17/20</span></li>
-            </ul>
-            <h2></h2>
-         </div>
-      </div> -->
 
       <!-- Choices Row -->
       <div class="row" id="choices-row">
          <!-- Elements dynamically added here via js -->
+         <div class="col-md-6">
+            <div class="card card shadow mb-3 movie">
+
+               <img
+                  src="https://m.media-amazon.com/images/M/MV5BNzM3NDFhYTAtYmU5Mi00NGRmLTljYjgtMDkyODQ4MjNkMGY2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
+                  alt="" class="max-50">
+               <div class="movie-info">
+                  <h5 class="movie-title">Inglorious Basterds - Netflix</h5>
+                  <p class="year-and-genre">
+                     <span class="year">(2009)</span>
+                     "Adventure, Drama, War"
+                  </p>
+                  <p class="ratings">IMBD: 8.3 Tomatoes: 29%</p>
+                  <p class="plot">
+                     In Nazi-occupied France during World War II, a plan to assassinate Nazi leaders by a group of
+                     Jewish U.S. soldiers coincides with a theatre owner's vengeful plans for the same.
+                  </p>
+                  <div class="text-center">
+                     <button class="btn btn-primary vote-btn">Click to Vote</button>
+                  </div>
+
+               </div>
+            </div>
+         </div>
       </div>
+
 
       <!-- Votes + Suggestions -->
       <div class="row">
