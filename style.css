@@ -56,9 +56,14 @@ body {
 }
 
 
+.movie-info {
+    padding: 20px;
+}
+
 
 .movie-title {
     font-weight: 700;
+    /* margin-bottom: 20px; */
 }
 
 .year {
