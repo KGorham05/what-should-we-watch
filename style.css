@@ -6,6 +6,10 @@ body {
     text-shadow: -1px 1px 3px rgba(255,0,0,1);
 }
 
+.blk-shad {
+    text-shadow: 2px 2px black;
+}
+
 .f-white {
     color: white;
 }
@@ -26,7 +30,6 @@ body {
 .hero-title {
     font-size: 58px;
     margin-top: 10px;
-    text-shadow: 2px 2px black;
 }
 
 .theme {
