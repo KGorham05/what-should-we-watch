@@ -165,33 +165,6 @@ $(document).ready(function () {
     }
   });
 
-  // opens the rsvp modal
-  $("#rsvp-btn").click(() => {
-    $("#rsvp-modal").modal('toggle')
-  })
-
-  // sends the rsvp to the db, updates the page
-  $("#send-rsvp").click(() => {
-    $("#rsvp-modal").modal('toggle')
-    const nameOfRSVP = $("#rsvp-input").val().trim()
-    movieData.ref("users").push({ person: nameOfRSVP });
-    rsvp - input.val("");
-  })
-
-  // listen for new RSVPS, and also on page load 
-  movieData.ref("users").on("child_added", function (childSnapshot) {
-    const person = childSnapshot.val().person;
-    console.log("Person: " + person)
-    whosComing.push(person);
-    displayRSVPs();
-  })
-
-  // Display the list of people who have RSVPd
-  const displayRSVPs = () => {
-    const listOfNames = whosComing.join(", ");
-    $("#rsvp-list").text(listOfNames);
-  }
-
   // whichever movie has the highest votes, display as upcoming film
   const figureOutWhatsNext = function (arr) {
     let mostVotes = 0;
@@ -206,7 +179,7 @@ $(document).ready(function () {
     chosenFilm = chosenFilm.toUpperCase();
     $("#upcoming-movie").html(chosenFilm);
 
-  }
+  };
 
 
 });
