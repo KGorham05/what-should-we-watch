@@ -140,8 +140,6 @@ $(document).ready(function () {
     };
 
     totalVotes.push(movieObj);
-    console.log(totalVotes);
-
     figureOutWhatsNext(totalVotes);
   });
 
@@ -180,6 +178,39 @@ $(document).ready(function () {
     $("#upcoming-movie").html(chosenFilm);
 
   };
+
+  // Create a function for setting a cookie
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  };
+
+  // Create a function to get a cookie
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  setCookie("num", "1", 1);
+  var existingCookie = document.cookie;
+  console.log(existingCookie);
+  // when a user clicks the vote button, check for an existing cookie.
+  // if the user has already voted 3 times today 
+  // tell them that they've reached their daily vote limit and to come back tomorrow
+  
 
 
 });
