@@ -154,6 +154,8 @@ $(document).ready(function () {
     if (globalVotes === "0") {
       // tell them that they've reached their daily vote limit and to come back tomorrow
       alert("You've reached the daily vote limit. Vote again tomorrow!");
+      //return to prevent the rest of the function from executing. 
+      return;
     } 
     // if not, update the cookie and decrement their globalvotes. 
     else {
