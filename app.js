@@ -146,16 +146,17 @@ $(document).ready(function () {
 
   // listen for vote-btn click
   $(document).on("click", ".vote-btn", function () {
-    alert('Thanks for your vote!');
-      // when a user clicks the vote button, check for an existing cookie.
+    // when a user clicks the vote button, check for an existing cookie.
     checkCookie();
     // if the user has already voted 3 times today 
+    console.log(globalVotes);
     if (globalVotes === 0) {
       // tell them that they've reached their daily vote limit and to come back tomorrow
       alert("You've reached the daily vote limit. Vote again tomorrow!");
     } 
     // if not, update the cookie and decrement their globalvotes. 
     else {
+      alert('Thanks for your vote!');
       globalVotes--;
       setCookie("numVotes", globalVotes, 1);
     }
@@ -228,13 +229,16 @@ $(document).ready(function () {
   // check if the cookie exists.
   function checkCookie() {
     var numVotes = getCookie("numVotes");
+    console.log(numVotes);
     if (numVotes != "") {
       // if it does, save it as a global variable
       globalVotes = numVotes;
       console.log(globalVotes);
       alert("You have " + numVotes + " votes remaining.");
+      console.log('cookie found')
     } else {
       // if it does not, create one with a numVotes of 3
+      console.log('no cookie exists')
       numVotes = 3;
       globalVotes = numVotes;
       console.log(globalVotes);
