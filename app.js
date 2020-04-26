@@ -150,7 +150,7 @@ $(document).ready(function () {
     checkCookie();
     // if the user has already voted 3 times today 
     console.log(globalVotes);
-    if (globalVotes === 0) {
+    if (globalVotes === "0") {
       // tell them that they've reached their daily vote limit and to come back tomorrow
       alert("You've reached the daily vote limit. Vote again tomorrow!");
     } 
