@@ -158,6 +158,7 @@ $(document).ready(function () {
     else {
       alert('Thanks for your vote!');
       globalVotes--;
+      alert("You have " + globalVotes + " votes remaining.");
       setCookie("numVotes", globalVotes, 1);
     }
     
@@ -234,7 +235,6 @@ $(document).ready(function () {
       // if it does, save it as a global variable
       globalVotes = numVotes;
       console.log(globalVotes);
-      alert("You have " + numVotes + " votes remaining.");
       console.log('cookie found')
     } else {
       // if it does not, create one with a numVotes of 3
@@ -243,7 +243,6 @@ $(document).ready(function () {
       globalVotes = numVotes;
       console.log(globalVotes);
       setCookie("numVotes", numVotes, 1);
-      alert("You have " + numVotes + " votes remaining.");
     }
   }
 
