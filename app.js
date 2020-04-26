@@ -15,7 +15,8 @@ $(document).ready(function () {
   // Global Variables
   const movieData = firebase.database();
   const totalVotes = [];
-  const whosComing = [];
+  let globalVotes;
+  let existingCookie = document.cookie;
 
   // Submit a movie button
   $("#submit-movie-suggestion").click(function (e) {
@@ -145,7 +146,22 @@ $(document).ready(function () {
 
   // listen for vote-btn click
   $(document).on("click", ".vote-btn", function () {
-    alert('Thanks for your vote!')
+    alert('Thanks for your vote!');
+      // when a user clicks the vote button, check for an existing cookie.
+    checkCookie();
+    // if the user has already voted 3 times today 
+    if (globalVotes === 0) {
+      // tell them that they've reached their daily vote limit and to come back tomorrow
+      alert("You've reached the daily vote limit. Vote again tomorrow!");
+    } 
+    // if not, update the cookie and decrement their globalvotes. 
+    else {
+      globalVotes--;
+      setCookie("numVotes", globalVotes, 1);
+    }
+    
+
+
     let key = $(this).data("key");
     for (i = 0; i < totalVotes.length; i++) {
       if (totalVotes[i].key === key) {
@@ -161,6 +177,10 @@ $(document).ready(function () {
         break;
       }
     }
+
+
+
+
   });
 
   // whichever movie has the highest votes, display as upcoming film
@@ -182,8 +202,8 @@ $(document).ready(function () {
   // Create a function for setting a cookie
   function setCookie(cname, cvalue, exdays) {
     var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   };
 
@@ -192,7 +212,7 @@ $(document).ready(function () {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
       while (c.charAt(0) == ' ') {
         c = c.substring(1);
@@ -204,13 +224,31 @@ $(document).ready(function () {
     return "";
   }
 
-  setCookie("num", "1", 1);
-  var existingCookie = document.cookie;
-  console.log(existingCookie);
-  // when a user clicks the vote button, check for an existing cookie.
-  // if the user has already voted 3 times today 
-  // tell them that they've reached their daily vote limit and to come back tomorrow
+
+  // check if the cookie exists.
+  function checkCookie() {
+    var numVotes = getCookie("numVotes");
+    if (numVotes != "") {
+      // if it does, save it as a global variable
+      globalVotes = numVotes;
+      console.log(globalVotes);
+      alert("You have " + numVotes + " votes remaining.");
+    } else {
+      // if it does not, create one with a numVotes of 3
+      numVotes = 3;
+      globalVotes = numVotes;
+      console.log(globalVotes);
+      setCookie("numVotes", numVotes, 1);
+      alert("You have " + numVotes + " votes remaining.");
+    }
+  }
+
+  checkCookie();
   
+  console.log(existingCookie);
+
+  
+
 
 
 });
