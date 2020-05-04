@@ -1,3 +1,11 @@
+// update code so when user joins chat they are assigned a color
+
+// on double click of a message, append an emoji heart
+// if the heart already exists, put a x2 
+// on hover over the heart, show who liked the message
+// increase font weight of userNames on message send
+
+
 $(document).ready(function() {
   // Configure Firebase
   const firebaseConfig = {
@@ -15,10 +23,16 @@ $(document).ready(function() {
   // Global Variables
   const movieData = firebase.database();
   let currentUser = "";
-  const colorArr = ["#A800FF", "#0079FF", "#00F11D", "#FF7F00", "#FF0900"]
+  const colorArr = ["#FF0000", "#FF4000", "#FF8000", "#FFFF00", "#C0FF00", "#80FF00", "#40FF00", "#00FF00", "#00FF80", "#00FFC0", "#00FFFF", "#00C0FF", "#0080FF", "#0040FF", "#0000FF", "#4000FF", "#8000FF", "#C000FF", "#FF00FF", "#FF00C0", "#FF0080"]
   let currentColor = 0;
+  
+  const genRandomColor = function() {
+    return Math.floor(Math.random() * 21)
+  }
+   
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
+
   $("#un-submit").click(function() {
     // make sure they input something
     const userName = $("#un-input")
@@ -26,6 +40,10 @@ $(document).ready(function() {
       .trim();
     if (userName.length) {
       currentUser = userName;
+      // add global message when someone joins the chat (refactor send message into a function that takes in a message obj)
+      
+
+
     } else {
       alert("You must input a username to join the chat!");
       return;
@@ -79,7 +97,7 @@ $(document).ready(function() {
     const nameStamp = $("<p class='name-stamp'>").text(name);
     const message = $("<p class='message-text'>").text(mText);
     // add alternating colors to users who join
-    nameStamp.attr('style', `color: ${colorArr[currentColor]}`)
+    nameStamp.attr('style', `color: ${colorArr[genRandomColor()]}`)
     // increment currentColor counter so color changes with next message
     currentColor++
     // prevent counter from going over 5
@@ -98,3 +116,4 @@ $(document).ready(function() {
     scrollToBottom();
   });
 });
+
