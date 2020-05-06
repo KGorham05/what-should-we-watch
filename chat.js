@@ -161,7 +161,10 @@ $(document).ready(function () {
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-      console.log(response.data[0].images.fixed_height.url);
+      let gif = $("<img>")
+      gif.attr("src", response.data[0].images.fixed_height.url)
+      $("#messages").append(gif);
+      // console.log(response.data[0].images.fixed_height.url);
       // var giphy = response.data;
     })
   };
