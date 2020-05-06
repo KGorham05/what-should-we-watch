@@ -6,7 +6,7 @@
 // increase font weight of userNames on message send
 
 
-$(document).ready(function() {
+$(document).ready(function () {
   // Configure Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCqKTF0CNOTC5nJFuKiFaTaea4-9WRm15I",
@@ -24,15 +24,15 @@ $(document).ready(function() {
   const movieData = firebase.database();
   let currentUser = "";
   const colorArr = ["#FF0000", "#FF4000", "#FF8000", "#FFFF00", "#C0FF00", "#80FF00", "#40FF00", "#00FF00", "#00FF80", "#00FFC0", "#00FFFF", "#00C0FF", "#0080FF", "#0040FF", "#0000FF", "#4000FF", "#8000FF", "#C000FF", "#FF00FF", "#FF00C0", "#FF0080"]
-  
-  const genRandomColor = function() {
+
+  const genRandomColor = function () {
     return Math.floor(Math.random() * 21)
   }
-   
+
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
 
-  $("#un-submit").click(function() {
+  $("#un-submit").click(function () {
     // make sure they input something
     const userName = $("#un-input")
       .val()
@@ -56,7 +56,7 @@ $(document).ready(function() {
 
   // Chat room logic
   // listen for button click
-  $("#m-send").click(function(e) {
+  $("#m-send").click(function (e) {
     e.preventDefault();
     // capture the message
     const message = $("#m")
@@ -65,8 +65,12 @@ $(document).ready(function() {
 
     // check if the message starts with "/giphy"
     if (message.startsWith('/giphy')) {
-      // ping the giphy api for whatever word is typed after giphy
-      return;
+
+      const gifToFind = message.split(" ")[1]
+      console.log(gifToFind);
+      handleGiphy(gifToFind);
+      $("#m").val("");
+      return; 
     }
 
     // send it to the database
@@ -84,7 +88,7 @@ $(document).ready(function() {
   var mInput = $("#m");
 
   // Execute a function when the user releases a key on the keyboard
-  mInput.on("keyup", function(event) {
+  mInput.on("keyup", function (event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
       // Cancel the default action
@@ -94,12 +98,12 @@ $(document).ready(function() {
     }
   });
 
-  const scrollToBottom = function() {
+  const scrollToBottom = function () {
     $(".messages-area").scrollTop($(".messages-area")[0].scrollHeight);
   };
 
   // listen for any changes to the database and add them to the page
-  movieData.ref("chat").on("child_added", function(childSnapshot) {
+  movieData.ref("chat").on("child_added", function (childSnapshot) {
     const name = childSnapshot.val().name;
     const mText = childSnapshot.val().message;
     const key = childSnapshot.key;
@@ -125,17 +129,17 @@ $(document).ready(function() {
     chatBubble.attr('data-key', key);
     chatBubble.append(nameStamp);
     chatBubble.append(message);
-    
+
 
     $("#messages").append(chatBubble);
-    
+
     // scroll to the bottom
     scrollToBottom();
   });
 
   // listen for double click to chat bubble
   // this works to update the page for the current user, but it's not sent to other users
-  $('body').on('dblclick', '.chat-bubble', function() {
+  $('body').on('dblclick', '.chat-bubble', function () {
     if ($(this).data('heart') === false) {
       let heart = $('<p>').text(`❤️ ${currentUser} Liked this`);
       heart.insertAfter($(this));
@@ -148,5 +152,20 @@ $(document).ready(function() {
 
   })
 
-});
+  const handleGiphy = function (searchTerm) {
+
+    const queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
+
+
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response.data[0].images.fixed_height.url);
+      // var giphy = response.data;
+    })
+  };
+
+
+  });
 
