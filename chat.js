@@ -154,18 +154,34 @@ $(document).ready(function () {
 
   const handleGiphy = function (searchTerm) {
 
-    const queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
+    const queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
 
 
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-      let gif = $("<img>")
-      gif.attr("src", response.data[0].images.fixed_height.url)
-      $("#messages").append(gif);
-      // console.log(response.data[0].images.fixed_height.url);
-      // var giphy = response.data;
+      // create an img to hold the gif
+      const gif = $("<img class='gif'>")
+      // set the image src = the first gif in the response array
+      gif.attr("src", response.data[0].images.fixed_width.url);
+      // create Send Button
+      const sendBtn = $("<button class='btn btn-success gif-btn'>Send</button>");
+      // create Shuffle Button
+      const shuffleBtn = $("<button class='btn btn-secondary gif-btn'>Shuffle</button>");
+      // create Cancel Button
+      const cancelBtn = $("<button class='btn btn-danger gif-btn'>Cancel</button>");
+
+      $("#messages")
+        .append(gif)
+        .append(sendBtn)
+        .append(shuffleBtn)
+        .append(cancelBtn)
+      // if user clicks send, send the gif as a message to the DB and remove the buttons
+      // if user clicks suffleBtn, switch to next gif in response object
+      // if user clicks cancel, remove gif and buttons from the page. 
+
+      scrollToBottom();
     })
   };
 
