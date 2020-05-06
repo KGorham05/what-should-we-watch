@@ -93,16 +93,21 @@ body {
     margin-top: 5px;
 }
 
-.name-stamp {
+.name-stamp, .system-name {
     padding-top: 5px;
     padding-left: 10px;
     margin-bottom: 0px;
+    font-weight: 700;
 }
 
-.message-text {
+.message-text, .system-text {
     padding-left: 10px;
     padding-bottom: 5px;
     margin-bottom: 0px;
+}
+
+.system-text {
+    font-weight: 700;
 }
 
 @media screen and (max-width: 600px) {

@@ -24,7 +24,8 @@ $(document).ready(function() {
   const movieData = firebase.database();
   let currentUser = "";
   const colorArr = ["#FF0000", "#FF4000", "#FF8000", "#FFFF00", "#C0FF00", "#80FF00", "#40FF00", "#00FF00", "#00FF80", "#00FFC0", "#00FFFF", "#00C0FF", "#0080FF", "#0040FF", "#0000FF", "#4000FF", "#8000FF", "#C000FF", "#FF00FF", "#FF00C0", "#FF0080"]
-  let currentColor = 0;
+  // let currentColor = 0;
+  let messageCounter = 0;
   
   const genRandomColor = function() {
     return Math.floor(Math.random() * 21)
@@ -41,8 +42,11 @@ $(document).ready(function() {
     if (userName.length) {
       currentUser = userName;
       // add global message when someone joins the chat (refactor send message into a function that takes in a message obj)
-      
-
+      let globalMessage = {
+        name: "System",
+        message: `${currentUser} has joined the chat`
+      }
+      movieData.ref("chat").push(globalMessage);
 
     } else {
       alert("You must input a username to join the chat!");
@@ -60,6 +64,13 @@ $(document).ready(function() {
     const message = $("#m")
       .val()
       .trim();
+
+    // check if the message starts with "/giphy"
+    if (message.startsWith('/giphy')) {
+      console.log('GIPHY!');
+      return;
+    }
+
     // send it to the database
     let messageObj = {
       name: currentUser,
@@ -98,22 +109,50 @@ $(document).ready(function() {
     const message = $("<p class='message-text'>").text(mText);
     // add alternating colors to users who join
     nameStamp.attr('style', `color: ${colorArr[genRandomColor()]}`)
-    // increment currentColor counter so color changes with next message
-    currentColor++
-    // prevent counter from going over 5
-    if (currentColor === 5) {
-        currentColor = 0
+
+
+    // check if the message is a system message
+    if (name === "System") {
+      nameStamp.attr('style', 'color: black');
+      // change the styling by adding a system-message class to it
+      nameStamp.removeClass('name-stamp');
+      message.removeClass('message-text');
+      nameStamp.addClass('system-name');
+      message.addClass('system-text');
     }
 
+    // add a unique identifier to each chat bubble 
+    chatBubble.attr('data-val', `${messageCounter}`);
+    chatBubble.attr('data-heart', 'false');
     chatBubble.append(nameStamp);
     chatBubble.append(message);
+    
 
     $("#messages").append(chatBubble);
-
+    // const messageDiv = $("#messages");
+    messageCounter++;
+    
     // scroll to the bottom
-    const messageDiv = $("#messages");
-
     scrollToBottom();
   });
+
+  // $('.slide-link[data-slide="0"]').addClass('active');
+
+  // listen for double click to chat bubble
+  $('body').on('dblclick', '.chat-bubble', function() {
+    // check if it has a heart
+    // console.log($(this).data('heart'))
+    if ($(this).data('heart') === false) {
+      let heart = $('<p>').text(`❤️ - ${currentUser} Liked this Message`);
+      heart.insertAfter($(this));
+      $(this).data('heart', true);
+    } else {
+      console.log('already clicked')
+    }
+
+
+
+  })
+
 });
 
