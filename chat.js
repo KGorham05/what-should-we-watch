@@ -24,8 +24,6 @@ $(document).ready(function() {
   const movieData = firebase.database();
   let currentUser = "";
   const colorArr = ["#FF0000", "#FF4000", "#FF8000", "#FFFF00", "#C0FF00", "#80FF00", "#40FF00", "#00FF00", "#00FF80", "#00FFC0", "#00FFFF", "#00C0FF", "#0080FF", "#0040FF", "#0000FF", "#4000FF", "#8000FF", "#C000FF", "#FF00FF", "#FF00C0", "#FF0080"]
-  // let currentColor = 0;
-  let messageCounter = 0;
   
   const genRandomColor = function() {
     return Math.floor(Math.random() * 21)
@@ -67,7 +65,7 @@ $(document).ready(function() {
 
     // check if the message starts with "/giphy"
     if (message.startsWith('/giphy')) {
-      console.log('GIPHY!');
+      // ping the giphy api for whatever word is typed after giphy
       return;
     }
 
@@ -104,6 +102,7 @@ $(document).ready(function() {
   movieData.ref("chat").on("child_added", function(childSnapshot) {
     const name = childSnapshot.val().name;
     const mText = childSnapshot.val().message;
+    const key = childSnapshot.key;
     const chatBubble = $("<div class='chat-bubble'>");
     const nameStamp = $("<p class='name-stamp'>").text(name);
     const message = $("<p class='message-text'>").text(mText);
@@ -122,28 +121,23 @@ $(document).ready(function() {
     }
 
     // add a unique identifier to each chat bubble 
-    chatBubble.attr('data-val', `${messageCounter}`);
     chatBubble.attr('data-heart', 'false');
+    chatBubble.attr('data-key', key);
     chatBubble.append(nameStamp);
     chatBubble.append(message);
     
 
     $("#messages").append(chatBubble);
-    // const messageDiv = $("#messages");
-    messageCounter++;
     
     // scroll to the bottom
     scrollToBottom();
   });
 
-  // $('.slide-link[data-slide="0"]').addClass('active');
-
   // listen for double click to chat bubble
+  // this works to update the page for the current user, but it's not sent to other users
   $('body').on('dblclick', '.chat-bubble', function() {
-    // check if it has a heart
-    // console.log($(this).data('heart'))
     if ($(this).data('heart') === false) {
-      let heart = $('<p>').text(`❤️ - ${currentUser} Liked this Message`);
+      let heart = $('<p>').text(`❤️ ${currentUser} Liked this`);
       heart.insertAfter($(this));
       $(this).data('heart', true);
     } else {

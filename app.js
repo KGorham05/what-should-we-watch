@@ -165,8 +165,6 @@ $(document).ready(function () {
       setCookie("numVotes", globalVotes, 1);
     }
     
-
-
     let key = $(this).data("key");
     for (i = 0; i < totalVotes.length; i++) {
       if (totalVotes[i].key === key) {
@@ -182,9 +180,6 @@ $(document).ready(function () {
         break;
       }
     }
-
-
-
 
   });
 
