@@ -44,8 +44,7 @@ $(document).ready(function () {
     "#FF00C0",
     "#FF0080",
   ];
-  // variable to generate a random color for the user when they join
-  const currentColor = colorArr[genRandomColor()];
+
   // when a message is sent, send this data with it
   // when a message is appended to the page, use this value to set the color property
 
@@ -53,6 +52,9 @@ $(document).ready(function () {
     return Math.floor(Math.random() * 21);
   };
 
+  // variable to generate a random color for the user when they join
+  const currentColor = colorArr[genRandomColor()];
+  
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
 
@@ -134,7 +136,10 @@ $(document).ready(function () {
     // check if the message is a gif
     if (mText === "gif") {
       console.log("Gif found!");
-      const img = $("<img class='gif'>").attr("src", childSnapshot.val().gifSrc);
+      const img = $("<img class='gif'>").attr(
+        "src",
+        childSnapshot.val().gifSrc
+      );
 
       chatBubble.attr("data-heart", "false");
       chatBubble.attr("data-key", key);
@@ -145,8 +150,6 @@ $(document).ready(function () {
       scrollToBottom();
       return;
     }
-
-    
 
     // check if the message is a system message
     if (name === "System") {
@@ -179,8 +182,10 @@ $(document).ready(function () {
   });
 
   const handleGiphy = function (searchTerm) {
-
-    const queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
+    const queryURL =
+      "https://api.giphy.com/v1/gifs/search?q=" +
+      searchTerm +
+      "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
 
     $.ajax({
       url: queryURL,
