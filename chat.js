@@ -3,7 +3,6 @@
 // on double click of a message, append an emoji heart
 // if the heart already exists, put a x2
 // on hover over the heart, show who liked the message
-// increase font weight of userNames on message send
 
 $(document).ready(function () {
   // Configure Firebase
@@ -21,7 +20,7 @@ $(document).ready(function () {
 
   // Global Variables
   const movieData = firebase.database();
-  let currentUser = "";
+  const currentUser = "";
   const colorArr = [
     "#FF0000",
     "#FF4000",
@@ -45,6 +44,10 @@ $(document).ready(function () {
     "#FF00C0",
     "#FF0080",
   ];
+  // variable to generate a random color for the user when they join
+  const currentColor = colorArr[genRandomColor()];
+  // when a message is sent, send this data with it
+  // when a message is appended to the page, use this value to set the color property
 
   const genRandomColor = function () {
     return Math.floor(Math.random() * 21);
@@ -234,7 +237,7 @@ $(document).ready(function () {
         }
         gif.attr("src", response.data[gifIterator].images.fixed_width.url);
       });
-      
+
       // if user clicks cancel, remove gif and buttons from the page.
       $("body").on("click", "#cancel-btn", function () {
         gif.hide();
