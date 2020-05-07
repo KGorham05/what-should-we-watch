@@ -20,7 +20,7 @@ $(document).ready(function () {
 
   // Global Variables
   const movieData = firebase.database();
-  const currentUser = "";
+  let currentUser = "";
   const colorArr = [
     "#FF0000",
     "#FF4000",
@@ -54,7 +54,7 @@ $(document).ready(function () {
 
   // variable to generate a random color for the user when they join
   const currentColor = colorArr[genRandomColor()];
-  
+
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
 
