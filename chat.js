@@ -131,7 +131,7 @@ $(document).ready(function () {
     // check if the message is a gif
     if (mText === "gif") {
       console.log("Gif found!");
-      const img = $("<img>").attr("src", childSnapshot.val().gifSrc);
+      const img = $("<img class='gif'>").attr("src", childSnapshot.val().gifSrc);
 
       chatBubble.attr("data-heart", "false");
       chatBubble.attr("data-key", key);
@@ -177,10 +177,7 @@ $(document).ready(function () {
 
   const handleGiphy = function (searchTerm) {
 
-    const queryURL =
-      "https://api.giphy.com/v1/gifs/search?q=" +
-      searchTerm +
-      "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
+    const queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchTerm + "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
 
     $.ajax({
       url: queryURL,
@@ -188,9 +185,9 @@ $(document).ready(function () {
     }).then(function (response) {
       // create an img to hold the gif
       const gif = $("<img class='gif'>");
-      let currentGifSrc = response.data[0].images.fixed_width.url;
+      let gifIterator = 0;
       // set the image src = the first gif in the response array
-      gif.attr("src", currentGifSrc);
+      gif.attr("src", response.data[gifIterator].images.fixed_width.url);
       // create Send Button
       const sendBtn = $(
         "<button id='send-btn'class='btn btn-success gif-btn'>Send</button>"
@@ -218,20 +215,32 @@ $(document).ready(function () {
         let messageObj = {
           name: currentUser,
           message: "gif",
-          gifSrc: currentGifSrc,
+          gifSrc: response.data[gifIterator].images.fixed_width.url,
         };
 
         movieData.ref("chat").push(messageObj);
-        // hide the gif that was showing locally
+        // hide the gif + buttons that were showing locally
+        gif.hide();
+        sendBtn.hide();
+        shuffleBtn.hide();
+        cancelBtn.hide();
       });
 
       // if user clicks suffleBtn, switch to next gif in response object
       $("body").on("click", "#suffle-btn", function () {
-        console.log("Clicked shuffle btn");
+        gifIterator++;
+        if (gifIterator === 10) {
+          gifIterator = 0;
+        }
+        gif.attr("src", response.data[gifIterator].images.fixed_width.url);
       });
+      
       // if user clicks cancel, remove gif and buttons from the page.
       $("body").on("click", "#cancel-btn", function () {
-        console.log("Clicked cancel btn");
+        gif.hide();
+        sendBtn.hide();
+        shuffleBtn.hide();
+        cancelBtn.hide();
       });
     });
   };
