@@ -44,6 +44,12 @@ $(document).ready(function () {
     "#FF00C0",
     "#FF0080",
   ];
+  let gif;
+  let gifIterator = 0;
+  let giphyResponse;
+  let sendBtn;
+  let shuffleBtn;
+  let cancelBtn;
 
   // when a message is sent, send this data with it
   // when a message is appended to the page, use this value to set the color property
@@ -135,7 +141,6 @@ $(document).ready(function () {
 
     // check if the message is a gif
     if (mText === "gif") {
-      console.log("Gif found!");
       const img = $("<img class='gif'>").attr(
         "src",
         childSnapshot.val().gifSrc
@@ -192,20 +197,20 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (response) {
       // create an img to hold the gif
-      const gif = $("<img class='gif'>");
-      let gifIterator = 0;
+      gif = $("<img class='gif'>");
+      giphyResponse = response;
       // set the image src = the first gif in the response array
-      gif.attr("src", response.data[gifIterator].images.fixed_width.url);
+      gif.attr("src", giphyResponse.data[gifIterator].images.fixed_width.url);
       // create Send Button
-      const sendBtn = $(
+      sendBtn = $(
         "<button id='send-btn'class='btn btn-success gif-btn'>Send</button>"
       );
       // create Shuffle Button
-      const shuffleBtn = $(
+      shuffleBtn = $(
         "<button id='suffle-btn' class='btn btn-secondary gif-btn'>Shuffle</button>"
       );
       // create Cancel Button
-      const cancelBtn = $(
+      cancelBtn = $(
         "<button id='cancel-btn' class='btn btn-danger gif-btn'>Cancel</button>"
       );
 
@@ -216,40 +221,42 @@ $(document).ready(function () {
         .append(cancelBtn);
 
       scrollToBottom();
-
-      // if user clicks send, send the gif as a message to the DB and remove the buttons
-      $("body").on("click", "#send-btn", function () {
-        console.log("Clicked send btn");
-        let messageObj = {
-          name: currentUser,
-          message: "gif",
-          gifSrc: response.data[gifIterator].images.fixed_width.url,
-        };
-
-        movieData.ref("chat").push(messageObj);
-        // hide the gif + buttons that were showing locally
-        gif.hide();
-        sendBtn.hide();
-        shuffleBtn.hide();
-        cancelBtn.hide();
-      });
-
-      // if user clicks suffleBtn, switch to next gif in response object
-      $("body").on("click", "#suffle-btn", function () {
-        gifIterator++;
-        if (gifIterator === 10) {
-          gifIterator = 0;
-        }
-        gif.attr("src", response.data[gifIterator].images.fixed_width.url);
-      });
-
-      // if user clicks cancel, remove gif and buttons from the page.
-      $("body").on("click", "#cancel-btn", function () {
-        gif.hide();
-        sendBtn.hide();
-        shuffleBtn.hide();
-        cancelBtn.hide();
-      });
     });
   };
+
+  // if user clicks send, send the gif as a message to the DB and remove the buttons
+  $("body").on("click", "#send-btn", function () {
+    console.log("Clicked send btn");
+    let messageObj = {
+      name: currentUser,
+      message: "gif",
+      gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
+    };
+    
+    console.log(messageObj)
+    movieData.ref("chat").push(messageObj);
+    // hide the gif + buttons that were showing locally
+    gif.hide();
+    sendBtn.hide();
+    shuffleBtn.hide();
+    cancelBtn.hide();
+  });
+
+  // if user clicks suffleBtn, switch to next gif in response object
+  $("body").on("click", "#suffle-btn", function () {
+    gifIterator++;
+    if (gifIterator === 10) {
+      gifIterator = 0;
+    }
+    gif.attr("src", giphyResponse.data[gifIterator].images.fixed_width.url);
+  });
+
+  // if user clicks cancel, remove gif and buttons from the page.
+  $("body").on("click", "#cancel-btn", function () {
+    gif.hide();
+    sendBtn.hide();
+    shuffleBtn.hide();
+    cancelBtn.hide();
+  });
+
 });
