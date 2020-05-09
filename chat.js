@@ -154,7 +154,7 @@ $(document).ready(function () {
       $("#messages").append(chatBubble);
       scrollToBottom();
       return;
-    }
+    };
 
     // check if the message is a system message
     if (name === "System") {
