@@ -74,6 +74,7 @@ $(document).ready(function () {
       let globalMessage = {
         name: "System",
         message: `${currentUser} has joined the chat`,
+        likedBy: []
       };
       movieData.ref("chat").push(globalMessage);
     } else {
@@ -103,7 +104,8 @@ $(document).ready(function () {
     let messageObj = {
       name: currentUser,
       message: message,
-      tColor: currentColor
+      tColor: currentColor,
+      likedBy: [],
     };
 
     movieData.ref("chat").push(messageObj);
@@ -134,6 +136,7 @@ $(document).ready(function () {
     const name = childSnapshot.val().name;
     const mText = childSnapshot.val().message;
     const tColor = childSnapshot.val().tColor;
+    const likedBy = childSnapshot.val().likedBy;
     const key = childSnapshot.key;
     const chatBubble = $("<div class='chat-bubble'>");
     const nameStamp = $("<p class='name-stamp'>").text(name);
@@ -153,6 +156,8 @@ $(document).ready(function () {
       chatBubble.attr("data-key", key);
       chatBubble.append(nameStamp);
       chatBubble.append(img);
+      
+      // duplicate liking logic here -> refactor later
 
       $("#messages").append(chatBubble);
       scrollToBottom();
@@ -169,24 +174,41 @@ $(document).ready(function () {
       message.addClass("system-text");
     }
 
-    chatBubble.attr("data-heart", "false");
+    // chatBubble.attr("data-heart", "false");
     chatBubble.attr("data-key", key);
     chatBubble.append(nameStamp);
     chatBubble.append(message);
+    
+
+
     $("#messages").append(chatBubble);
+    // check if anyone liked the message
+    if (likedBy) {
+      // if they did, append a heart + message of who liked it
+      let heart = $("<p>").text(`❤️ ${likedBy} Liked this`);
+      $("#messages").append(heart);
+    }
     scrollToBottom();
   });
 
+  // listen for update to a child, ie when someone likes a message
+  movieData.ref("chat").on("child_changed", function (childSnapshot) {
+    // locate the chat bubble being updated
+    let messageToUpdate = $(".chat-bubble[data-key='" + childSnapshot.key + "']");
+    let heart = $("<p>").text(`❤️ ${childSnapshot.val().likedBy} Liked this`);
+    heart.insertAfter(messageToUpdate);
+    
+  });
+
   // listen for double click to chat bubble
-  // this works to update the page for the current user, but it's not sent to other users
   $("body").on("dblclick", ".chat-bubble", function () {
-    if ($(this).data("heart") === false) {
-      let heart = $("<p>").text(`❤️ ${currentUser} Liked this`);
-      heart.insertAfter($(this));
-      $(this).data("heart", true);
-    } else {
-      console.log("already clicked");
-    }
+
+    // get the message key from the element clicked on
+    const messageKey = $(this).data("key")
+    // use it to update that child element with the currentUser TODO change update to not delete previous likes
+
+    movieData.ref("chat").child(messageKey).update({likedBy: currentUser})
+
   });
 
   const handleGiphy = function (searchTerm) {
