@@ -20,7 +20,6 @@ $(document).ready(function () {
 
   // Global Variables
   const movieData = firebase.database();
-  let currentUser = "";
   const colorArr = [
     "#FF0000",
     "#FF4000",
@@ -44,12 +43,14 @@ $(document).ready(function () {
     "#FF00C0",
     "#FF0080",
   ];
+  let currentColor;
+  let currentUser;
   let gif;
-  let gifIterator = 0;
   let giphyResponse;
   let sendBtn;
   let shuffleBtn;
   let cancelBtn;
+  let gifIterator = 0;
 
   // when a message is sent, send this data with it
   // when a message is appended to the page, use this value to set the color property
@@ -59,7 +60,7 @@ $(document).ready(function () {
   };
 
   // variable to generate a random color for the user when they join
-  const currentColor = colorArr[genRandomColor()];
+  currentColor = colorArr[genRandomColor()];
 
   // make the user enter a username into a modal
   $("#un-modal").modal({ backdrop: "static" }, "show");
@@ -102,6 +103,7 @@ $(document).ready(function () {
     let messageObj = {
       name: currentUser,
       message: message,
+      tColor: currentColor
     };
 
     movieData.ref("chat").push(messageObj);
@@ -131,13 +133,14 @@ $(document).ready(function () {
   movieData.ref("chat").on("child_added", function (childSnapshot) {
     const name = childSnapshot.val().name;
     const mText = childSnapshot.val().message;
+    const tColor = childSnapshot.val().tColor;
     const key = childSnapshot.key;
     const chatBubble = $("<div class='chat-bubble'>");
     const nameStamp = $("<p class='name-stamp'>").text(name);
     const message = $("<p class='message-text'>").text(mText);
 
     // add alternating colors to users who join
-    nameStamp.attr("style", `color: ${colorArr[genRandomColor()]}`);
+    nameStamp.attr("style", `color: ${tColor}`);
 
     // check if the message is a gif
     if (mText === "gif") {
@@ -229,6 +232,7 @@ $(document).ready(function () {
     console.log("Clicked send btn");
     let messageObj = {
       name: currentUser,
+      tColor: currentColor,
       message: "gif",
       gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
     };
