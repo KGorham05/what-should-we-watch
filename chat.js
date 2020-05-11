@@ -74,7 +74,7 @@ $(document).ready(function () {
       let globalMessage = {
         name: "System",
         message: `${currentUser} has joined the chat`,
-        likedBy: []
+        likedBy: [],
       };
       movieData.ref("chat").push(globalMessage);
     } else {
@@ -152,17 +152,16 @@ $(document).ready(function () {
         childSnapshot.val().gifSrc
       );
 
-      chatBubble.attr("data-heart", "false");
       chatBubble.attr("data-key", key);
       chatBubble.append(nameStamp);
       chatBubble.append(img);
-      
+
       // duplicate liking logic here -> refactor later
 
       $("#messages").append(chatBubble);
       scrollToBottom();
       return;
-    };
+    }
 
     // check if the message is a system message
     if (name === "System") {
@@ -176,10 +175,9 @@ $(document).ready(function () {
 
     // chatBubble.attr("data-heart", "false");
     chatBubble.attr("data-key", key);
+    chatBubble.attr("data-likes", likedBy);
     chatBubble.append(nameStamp);
     chatBubble.append(message);
-    
-
 
     $("#messages").append(chatBubble);
     // check if anyone liked the message
@@ -194,21 +192,25 @@ $(document).ready(function () {
   // listen for update to a child, ie when someone likes a message
   movieData.ref("chat").on("child_changed", function (childSnapshot) {
     // locate the chat bubble being updated
-    let messageToUpdate = $(".chat-bubble[data-key='" + childSnapshot.key + "']");
+    let messageToUpdate = $(
+      ".chat-bubble[data-key='" + childSnapshot.key + "']"
+    );
     let heart = $("<p>").text(`❤️ ${childSnapshot.val().likedBy} Liked this`);
     heart.insertAfter(messageToUpdate);
-    
   });
 
   // listen for double click to chat bubble
   $("body").on("dblclick", ".chat-bubble", function () {
-
     // get the message key from the element clicked on
-    const messageKey = $(this).data("key")
-    // use it to update that child element with the currentUser TODO change update to not delete previous likes
+    const messageKey = $(this).data("key");
+    let whoLikedThis = $(this).data("likes");
 
-    movieData.ref("chat").child(messageKey).update({likedBy: currentUser})
-
+    if (whoLikedThis) {
+      whoLikedThis = whoLikedThis + ", " + currentUser;
+    } else {
+      whoLikedThis = currentUser;
+    }
+    movieData.ref("chat").child(messageKey).update({ likedBy: whoLikedThis });
   });
 
   const handleGiphy = function (searchTerm) {
@@ -258,8 +260,8 @@ $(document).ready(function () {
       message: "gif",
       gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
     };
-    
-    console.log(messageObj)
+
+    console.log(messageObj);
     movieData.ref("chat").push(messageObj);
     // hide the gif + buttons that were showing locally
     gif.hide();
@@ -284,5 +286,4 @@ $(document).ready(function () {
     shuffleBtn.hide();
     cancelBtn.hide();
   });
-
 });
