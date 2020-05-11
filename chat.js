@@ -1,9 +1,3 @@
-// update code so when user joins chat they are assigned a color
-
-// on double click of a message, append an emoji heart
-// if the heart already exists, put a x2
-// on hover over the heart, show who liked the message
-
 $(document).ready(function () {
   // Configure Firebase
   const firebaseConfig = {
@@ -105,11 +99,9 @@ $(document).ready(function () {
     const userName = $("#un-input").val().trim();
     if (userName.length) {
       currentUser = userName;
-      // add global message when someone joins the chat (refactor send message into a function that takes in a message obj)
       let globalMessage = {
         name: "System",
         message: `${currentUser} has joined the chat`,
-        likedBy: [],
       };
       movieData.ref("chat").push(globalMessage);
     } else {
@@ -139,7 +131,6 @@ $(document).ready(function () {
       name: currentUser,
       message: message,
       tColor: currentColor,
-      likedBy: "",
     };
 
     movieData.ref("chat").push(messageObj);
@@ -147,7 +138,7 @@ $(document).ready(function () {
   });
 
   // listen for pressing enter
-    $("#m").on("keyup", function (event) {
+  $("#m").on("keyup", function (event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
       // Cancel the default action
@@ -182,9 +173,13 @@ $(document).ready(function () {
       chatBubble.append(nameStamp);
       chatBubble.append(img);
 
-      // duplicate liking logic here -> refactor later
-
       $("#messages").append(chatBubble);
+
+      if (likedBy) {
+        let heart = $("<p>").text(`❤️ ${likedBy} Liked this`);
+        $("#messages").append(heart);
+      }
+
       scrollToBottom();
       return;
     }
@@ -199,9 +194,7 @@ $(document).ready(function () {
       message.addClass("system-text");
     }
 
-    // chatBubble.attr("data-heart", "false");
     chatBubble.attr("data-key", key);
-    chatBubble.attr("data-likes", likedBy);
     chatBubble.append(nameStamp);
     chatBubble.append(message);
 
@@ -217,31 +210,44 @@ $(document).ready(function () {
 
   // listen for update to a child, ie when someone likes a message
   movieData.ref("chat").on("child_changed", function (childSnapshot) {
-    let messageToUpdate = $(
-      ".chat-bubble[data-key='" + childSnapshot.key + "']"
-    );
-    // check if a liked message already exists
-    const nextElement = messageToUpdate.next();
-    if (nextElement[0].innerText.startsWith("❤️")) {
-      nextElement[0].innerText = `❤️ ${childSnapshot.val().likedBy} Liked this`
-    } else {
+    const chatBubble = $(".chat-bubble[data-key='" + childSnapshot.key + "']");
+    const nextElement = chatBubble.next();
+
+    // if this is the last element on the page, or the next element doesn't start with the heart...
+    if (nextElement[0] == null || !nextElement[0].innerText.startsWith("❤️")) {
       let heart = $("<p>").text(`❤️ ${childSnapshot.val().likedBy} Liked this`);
-      heart.insertAfter(messageToUpdate);
+      heart.insertAfter(chatBubble);
+    }
+    // else a liked message exists, update it
+    else {
+      nextElement[0].innerText = `❤️ ${childSnapshot.val().likedBy} Liked this`;
     }
   });
 
   // listen for double click to chat bubble (initiate liking a message)
   $("body").on("dblclick", ".chat-bubble", function () {
-    // get the message key from the element clicked on
+    // check if anyone has already liked this message
     const messageKey = $(this).data("key");
-    let whoLikedThis = $(this).data("likes");
-
-    if (whoLikedThis) {
-      whoLikedThis = whoLikedThis + ", " + currentUser;
-    } else {
-      whoLikedThis = currentUser;
-    }
-    movieData.ref("chat").child(messageKey).update({ likedBy: whoLikedThis });
+    movieData
+      .ref("chat")
+      .child(messageKey)
+      .once("value", function (data) {
+        let whoLikedThis = data.val().likedBy;
+        if (whoLikedThis == null) {
+          console.log("First like");
+          movieData
+            .ref("chat")
+            .child(messageKey)
+            .update({ likedBy: currentUser });
+        } else {
+          console.log("This has been liked");
+          whoLikedThis = whoLikedThis + ", " + currentUser;
+          movieData
+            .ref("chat")
+            .child(messageKey)
+            .update({ likedBy: whoLikedThis });
+        }
+      });
   });
 
   // if user clicks send, send the gif as a message to the DB and remove the buttons
@@ -252,7 +258,6 @@ $(document).ready(function () {
       tColor: currentColor,
       message: "gif",
       gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
-      likedBy: ""
     };
 
     console.log(messageObj);
@@ -280,5 +285,5 @@ $(document).ready(function () {
     shuffleBtn.hide();
     cancelBtn.hide();
   });
-
+  
 });
