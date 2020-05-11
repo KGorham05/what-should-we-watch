@@ -285,5 +285,9 @@ $(document).ready(function () {
     shuffleBtn.hide();
     cancelBtn.hide();
   });
-  
+
 });
+
+// **TODO** Get event listener working for when a user exits the page
+// **TODO** When a user joins chat, add them to "current user list"
+// **TODO** When a user leaves, remove them from the "current user list"
