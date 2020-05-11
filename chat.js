@@ -51,15 +51,50 @@ $(document).ready(function () {
   let shuffleBtn;
   let cancelBtn;
   let gifIterator = 0;
-
-  // when a message is sent, send this data with it
-  // when a message is appended to the page, use this value to set the color property
-
   const genRandomColor = function () {
     return Math.floor(Math.random() * 21);
   };
+  const scrollToBottom = function () {
+    $(".messages-area").scrollTop($(".messages-area")[0].scrollHeight);
+  };
+  const handleGiphy = function (searchTerm) {
+    const queryURL =
+      "https://api.giphy.com/v1/gifs/search?q=" +
+      searchTerm +
+      "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
 
-  // variable to generate a random color for the user when they join
+    $.ajax({
+      url: queryURL,
+      method: "GET",
+    }).then(function (response) {
+      // create an img to hold the gif
+      gif = $("<img class='gif'>");
+      giphyResponse = response;
+      // set the image src = the first gif in the response array
+      gif.attr("src", giphyResponse.data[gifIterator].images.fixed_width.url);
+      // create Send Button
+      sendBtn = $(
+        "<button id='send-btn'class='btn btn-success gif-btn'>Send</button>"
+      );
+      // create Shuffle Button
+      shuffleBtn = $(
+        "<button id='suffle-btn' class='btn btn-secondary gif-btn'>Shuffle</button>"
+      );
+      // create Cancel Button
+      cancelBtn = $(
+        "<button id='cancel-btn' class='btn btn-danger gif-btn'>Cancel</button>"
+      );
+
+      $("#messages")
+        .append(gif)
+        .append(sendBtn)
+        .append(shuffleBtn)
+        .append(cancelBtn);
+
+      scrollToBottom();
+    });
+  };
+
   currentColor = colorArr[genRandomColor()];
 
   // make the user enter a username into a modal
@@ -85,8 +120,7 @@ $(document).ready(function () {
     $("#un-modal").modal("toggle");
   });
 
-  // Chat room logic
-  // listen for button click
+  // listen for send message button click
   $("#m-send").click(function (e) {
     e.preventDefault();
     // capture the message
@@ -105,7 +139,7 @@ $(document).ready(function () {
       name: currentUser,
       message: message,
       tColor: currentColor,
-      likedBy: [],
+      likedBy: "",
     };
 
     movieData.ref("chat").push(messageObj);
@@ -113,11 +147,7 @@ $(document).ready(function () {
   });
 
   // listen for pressing enter
-  // Get the input field
-  var mInput = $("#m");
-
-  // Execute a function when the user releases a key on the keyboard
-  mInput.on("keyup", function (event) {
+    $("#m").on("keyup", function (event) {
     // Number 13 is the "Enter" key on the keyboard
     if (event.keyCode === 13) {
       // Cancel the default action
@@ -126,10 +156,6 @@ $(document).ready(function () {
       $("#m-send").click();
     }
   });
-
-  const scrollToBottom = function () {
-    $(".messages-area").scrollTop($(".messages-area")[0].scrollHeight);
-  };
 
   // listen for any changes to the database and add them to the page
   movieData.ref("chat").on("child_added", function (childSnapshot) {
@@ -191,15 +217,20 @@ $(document).ready(function () {
 
   // listen for update to a child, ie when someone likes a message
   movieData.ref("chat").on("child_changed", function (childSnapshot) {
-    // locate the chat bubble being updated
     let messageToUpdate = $(
       ".chat-bubble[data-key='" + childSnapshot.key + "']"
     );
-    let heart = $("<p>").text(`❤️ ${childSnapshot.val().likedBy} Liked this`);
-    heart.insertAfter(messageToUpdate);
+    // check if a liked message already exists
+    const nextElement = messageToUpdate.next();
+    if (nextElement[0].innerText.startsWith("❤️")) {
+      nextElement[0].innerText = `❤️ ${childSnapshot.val().likedBy} Liked this`
+    } else {
+      let heart = $("<p>").text(`❤️ ${childSnapshot.val().likedBy} Liked this`);
+      heart.insertAfter(messageToUpdate);
+    }
   });
 
-  // listen for double click to chat bubble
+  // listen for double click to chat bubble (initiate liking a message)
   $("body").on("dblclick", ".chat-bubble", function () {
     // get the message key from the element clicked on
     const messageKey = $(this).data("key");
@@ -213,44 +244,6 @@ $(document).ready(function () {
     movieData.ref("chat").child(messageKey).update({ likedBy: whoLikedThis });
   });
 
-  const handleGiphy = function (searchTerm) {
-    const queryURL =
-      "https://api.giphy.com/v1/gifs/search?q=" +
-      searchTerm +
-      "&limit=10&rating=pg&api_key=E4GmjIzr95bf7cgs50n05QPKhxsZ1ZZh";
-
-    $.ajax({
-      url: queryURL,
-      method: "GET",
-    }).then(function (response) {
-      // create an img to hold the gif
-      gif = $("<img class='gif'>");
-      giphyResponse = response;
-      // set the image src = the first gif in the response array
-      gif.attr("src", giphyResponse.data[gifIterator].images.fixed_width.url);
-      // create Send Button
-      sendBtn = $(
-        "<button id='send-btn'class='btn btn-success gif-btn'>Send</button>"
-      );
-      // create Shuffle Button
-      shuffleBtn = $(
-        "<button id='suffle-btn' class='btn btn-secondary gif-btn'>Shuffle</button>"
-      );
-      // create Cancel Button
-      cancelBtn = $(
-        "<button id='cancel-btn' class='btn btn-danger gif-btn'>Cancel</button>"
-      );
-
-      $("#messages")
-        .append(gif)
-        .append(sendBtn)
-        .append(shuffleBtn)
-        .append(cancelBtn);
-
-      scrollToBottom();
-    });
-  };
-
   // if user clicks send, send the gif as a message to the DB and remove the buttons
   $("body").on("click", "#send-btn", function () {
     console.log("Clicked send btn");
@@ -259,6 +252,7 @@ $(document).ready(function () {
       tColor: currentColor,
       message: "gif",
       gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
+      likedBy: ""
     };
 
     console.log(messageObj);
@@ -286,4 +280,5 @@ $(document).ready(function () {
     shuffleBtn.hide();
     cancelBtn.hide();
   });
+
 });
