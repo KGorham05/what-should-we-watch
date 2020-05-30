@@ -120,8 +120,10 @@ $(document).ready(function () {
 
     // check if the message starts with "/giphy"
     if (message.startsWith("/giphy")) {
-      const gifToFind = message.split(" ")[1];
-      handleGiphy(gifToFind);
+      let messageAsArr = message.split(" ");
+      delete messageAsArr[0];
+      searchTermFormatted = messageAsArr.join("+")
+      handleGiphy(searchTermFormatted);
       $("#m").val("");
       return;
     }
