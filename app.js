@@ -41,7 +41,7 @@ $(document).ready(function () {
       // Creates local "temporary" object for holding train data
 
       // Ratings":[{"Source":"Rotten Tomatoes","Value":"82%"}]
-      let tomatoes;
+      let tomatoes = "No Score Available";
 
       for (var i = 0; i < response.Ratings.length; i++) {
         if (response.Ratings[i].Source === "Rotten Tomatoes") {
@@ -60,6 +60,8 @@ $(document).ready(function () {
         synopsis: response.Plot,
         numVotes: 0
       };
+
+      console.log(newMovie)
 
       // Uploads movie data to firebase
       movieData.ref("movies").push(newMovie);
