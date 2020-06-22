@@ -41,7 +41,7 @@ $(document).ready(function () {
       // Creates local "temporary" object for holding train data
 
       // Ratings":[{"Source":"Rotten Tomatoes","Value":"82%"}]
-      let tomatoes = "No Score Available";
+      let tomatoes = "NA";
 
       for (var i = 0; i < response.Ratings.length; i++) {
         if (response.Ratings[i].Source === "Rotten Tomatoes") {
