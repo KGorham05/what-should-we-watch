@@ -37,6 +37,10 @@ body {
     text-shadow: 2px 2px black;
     font-size: 36px;
 }
+
+.nick {
+    max-height: 150px;
+}
 /* Chat room logic + more - Need to split up into 2 docs */
 .chat-room {
    height: 100vh; 
