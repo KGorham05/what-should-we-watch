@@ -104,6 +104,11 @@ $(document).ready(function () {
         message: `${currentUser} has joined the chat`,
       };
       movieData.ref("chat").push(globalMessage);
+      globalMessage = {
+        name: "System",
+        message: `Type /help for help!`,
+      };
+      movieData.ref("chat").push(globalMessage);
     } else {
       alert("You must input a username to join the chat!");
       return;
@@ -124,6 +129,18 @@ $(document).ready(function () {
       delete messageAsArr[0];
       searchTermFormatted = messageAsArr.join("+")
       handleGiphy(searchTermFormatted);
+      $("#m").val("");
+      return;
+    }
+
+    // check if the message starts with "/help"
+    if (message.startsWith("/help")) {
+      let globalMessage = {
+        name: "System",
+        message: `${currentUser} forgot how to gif again! What a dummy! Just type "/giphy <search terms>" without the <>'s and press enter!`,
+      };
+      movieData.ref("chat").push(globalMessage);
+
       $("#m").val("");
       return;
     }
