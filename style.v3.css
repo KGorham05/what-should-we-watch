@@ -16,9 +16,9 @@ body {
 
 #hero {
     background-color: #363636;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url(popcorn.jpg);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url(manly.jpg);
     color: yellow;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
