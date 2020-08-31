@@ -16,7 +16,7 @@ body {
 
 #hero {
     background-color: #363636;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/matrix_numbers.jpg");
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/popcorn.jpg");
     color: yellow;
     background-position: center;
     background-repeat: no-repeat;
