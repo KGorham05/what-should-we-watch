@@ -52,6 +52,12 @@ $(document).ready(function () {
     $(".messages-area").scrollTop($(".messages-area")[0].scrollHeight);
   };
   const handleGiphy = function (searchTerm) {
+    console.log(searchTerm)
+
+    if (searchTerm.toLowerCase() === "+barf" || searchTerm.toLowerCase() === "+puke" || searchTerm.toLowerCase() === "+throw+up" || searchTerm.toLowerCase() === "+vomit" || searchTerm.toLowerCase() === "+spew" || searchTerm.toLowerCase() === "+retch" || searchTerm.toLowerCase() === "+hurl") {  
+      searchTerm = "+rainbow"
+    }
+    
     const queryURL =
       "https://api.giphy.com/v1/gifs/search?q=" +
       searchTerm +
