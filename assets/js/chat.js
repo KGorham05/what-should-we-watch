@@ -162,6 +162,17 @@ $(document).ready(function () {
     $("#m").val("");
   });
 
+  $("#giphy").click(function() {
+    let message = $("#m").val().trim();
+    message = "+" + message;
+    let messageAsArr = message.split(" ");
+    // messageAsArr.unshift("+")
+    searchTermFormatted = messageAsArr.join("+")
+    handleGiphy(searchTermFormatted);
+    $("#m").val("");
+    // return;
+
+  });
   // listen for pressing enter
   $("#m").on("keyup", function (event) {
     // Number 13 is the "Enter" key on the keyboard

@@ -138,4 +138,15 @@ body {
         padding-left: 0px;
     }
 
+    #m-send {
+        padding: 10px 50px 10px 50px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    #giphy {
+        padding: 10px 30px 10px 30px;
+        margin-top: 7px;
+    }
+
 } 
