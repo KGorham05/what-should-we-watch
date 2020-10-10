@@ -7,7 +7,7 @@
    <!-- Add Bootstrap -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-   <link rel="stylesheet" href="./style.v3.css">
+   <link rel="stylesheet" href="./assets/css/style.v4.css">
    <title>Quarantine Movie Club</title>
 </head>
 
@@ -15,12 +15,10 @@
 
    <!-- TODO: Add a section to display what we've watched so far, where people can rate the film -->
    <!-- TODO: Add a "View more details" button/link that opens a modal with more movie info, embeds the trailer if possible -->
-   <!-- TODO: Rearrange Page elements and create a "scoreboard" -->
-   <!-- TODO: Change Color Pallet -->
    <!-- TODO: Add User Authentication -->
 
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bottom-shadow">
-      <a class="navbar-brand red-shad" href="#">Quarantine Movie Club</a>
+      <a class="navbar-brand red-shad" href="./index.html">Quarantine Movie Club</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
@@ -29,59 +27,83 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
          <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-               <a class="nav-link active" href="#choices-row">Vote</a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link active" href="#vote-display">Results</a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link active" href="#suggest-a-movie">Suggest</a>
-            </li>
-            <li class="nav-item">
                <a class="nav-link active" href="./chat.html">Chat</a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Watch Live</a>
             </li>
          </ul>
       </div>
    </nav>
 
 
-   <div class="container-fluid">
+   <div class="container">
 
-      <!-- Header -->
       <div class="row">
-         <div id="hero" class="col-12 text-center bottom-shadow">
-            <h3 class="red-shad f-white">A Look Back</h3>
+         <div class="col">
+            <h1 class="mt-3 text-center">Founded March 18th, 2020</h1>
+            <h3>What We've Watched:</h3>
+            <ol>
+               <li>10 Things I Hate About You</li>
+               <li>Always Be My Maybe</li>
+               <li>An American Werewolf in London</li>
+               <li>Black Panther</li>
+               <li>Coherence</li>
+               <li>Dave</li>
+               <li>Django</li>
+               <li>The Departed</li>
+               <li>Get Him to the Greek</li>
+               <li>Good Boys</li>
+               <li>The Good Dinosaur</li>
+               <li>Groundhog Day</li>
+               <li>Hamilton</li>
+               <li>Hook</li>
+               <li>The Interview</li>
+               <li>Jurassic Park</li>
+               <li>Knives Out</li>
+               <li>The Lobster</li>
+               <li>The Money Pit</li>
+               <li>Mrs. Doubtfire</li>
+               <li>Never Goin' Back</li>
+               <li>Ready Or Not</li>
+               <li>Rear Window</li>
+               <li>Say Anything</li>
+               <li>Scott Pilgrim vs. The World</li>
+               <li>Sleeping With Other People</li>
+               <li>Top Gun</li>
+               <li>Who Framed Roger Rabbit</li>
+               <li>The Witches (Shown as double feature)</li>
+            </ol>
          </div>
       </div>
-   
-      <!-- Choices Row -->
-      <div class="row" id="history-row">
-         <!-- Elements dynamically added here via js -->
+
+      <!-- Header -->
+      <!-- <div class="row">
+         <div id="hero" class="col-12 text-center bottom-shadow">
+            <h3 class="red-shad f-white">Theme: Spooky 80s Quarantine </h3>
+            <h1 class="hero-title blk-shad"><span id="upcoming-movie" class="cap-it">Upcoming Movie</span></h1>
+            <img class="panther-logo img-fluid" src="assets/images/pngwing.com.png"/> 
+            <h2 class="blk-shad">FRIDAY 7:15 PM</h2>
+            <h2 class="blk-shad">10/16/20</h2>
+         </div>
+      </div> -->
 
 
-      </div>
 
-      
 
-   </div>
 
-   <!-- Firebase -->
-   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
-   <!-- jQuery -->
-   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"></script>
-   <!-- My JS -->
 
+      <!-- Firebase -->
+      <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+      <!-- jQuery -->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+         crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+         crossorigin="anonymous"></script>
+      <!-- My JS -->
+      <script src="./assets/js/app.js"></script>
 
 </body>
 
