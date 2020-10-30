@@ -54,7 +54,7 @@ $(document).ready(function () {
   const handleGiphy = function (searchTerm) {
     console.log(searchTerm)
 
-    if (searchTerm.toLowerCase() === "+barf" || searchTerm.toLowerCase() === "+puke" || searchTerm.toLowerCase() === "+throw+up" || searchTerm.toLowerCase() === "+vomit" || searchTerm.toLowerCase() === "+spew" || searchTerm.toLowerCase() === "+retch" || searchTerm.toLowerCase() === "+hurl") {  
+    if (searchTerm.toLowerCase() === "+barf" || searchTerm.toLowerCase() === "+puke" || searchTerm.toLowerCase() === "+throw+up" || searchTerm.toLowerCase() === "+vomit" || searchTerm.toLowerCase() === "+spew" || searchTerm.toLowerCase() === "+retch" || searchTerm.toLowerCase() === "+hurl" /* || searchTerm.toLowerCase() === "+team+america" || searchTerm.toLowerCase() === "+team+america+world" || searchTerm.toLowerCase() === "+team+america+world+police" || searchTerm.toLowerCase() === "+world+police" || searchTerm.toLowerCase() === "+team+police" || || searchTerm.toLowerCase() === "+team+ameirca"*/) {  
       searchTerm = "+rainbow"
     }
     
@@ -289,11 +289,17 @@ $(document).ready(function () {
   // if user clicks send, send the gif as a message to the DB and remove the buttons
   $("body").on("click", "#send-btn", function () {
     console.log("Clicked send btn");
+
+    let gifSrcInQuestion = giphyResponse.data[gifIterator].images.fixed_width.url;
+    if (gifSrcInQuestion == "https://media0.giphy.com/media/dOl2LFw0RbTMc/200w.gif" || "https://media0.giphy.com/media/EiCQzmzE5HLaw/200w.gif") {   
+      gifSrcInQuestion = "https://media1.giphy.com/media/6k2eA8J1k7rGulkoaN/200w.gif";
+    } 
+
     let messageObj = {
       name: currentUser,
       tColor: currentColor,
       message: "gif",
-      gifSrc: giphyResponse.data[gifIterator].images.fixed_width.url,
+      gifSrc: gifSrcInQuestion,
     };
 
     console.log(messageObj);
