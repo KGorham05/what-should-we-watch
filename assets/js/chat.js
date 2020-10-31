@@ -291,7 +291,7 @@ $(document).ready(function () {
     console.log("Clicked send btn");
 
     let gifSrcInQuestion = giphyResponse.data[gifIterator].images.fixed_width.url;
-    if (gifSrcInQuestion == "https://media0.giphy.com/media/dOl2LFw0RbTMc/200w.gif" || "https://media0.giphy.com/media/EiCQzmzE5HLaw/200w.gif") {   
+    if (gifSrcInQuestion == "https://media0.giphy.com/media/dOl2LFw0RbTMc/200w.gif" || gifSrcInQuestion == "https://media0.giphy.com/media/EiCQzmzE5HLaw/200w.gif") {   
       gifSrcInQuestion = "https://media1.giphy.com/media/6k2eA8J1k7rGulkoaN/200w.gif";
     } 
 
