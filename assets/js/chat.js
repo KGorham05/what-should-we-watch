@@ -37,6 +37,8 @@ $(document).ready(function () {
     "#FF00C0",
     "#FF0080",
   ];
+  const christmasEmojis = ["🎅", "🦌", "🍪",  "🥛", "🌟", "❄️", "☃️", "⛄", "🎄", "🎁", "🧦", "🔔", "🕯️"]
+
   let currentColor;
   let currentUser;
   let gif;
@@ -45,12 +47,19 @@ $(document).ready(function () {
   let shuffleBtn;
   let cancelBtn;
   let gifIterator = 0;
+
   const genRandomColor = function () {
     return Math.floor(Math.random() * 21);
   };
+
+  const genRandomChristmasEmoji = function() {
+    return christmasEmojis[Math.floor(Math.random() * 13)]
+  };
+
   const scrollToBottom = function () {
     $(".messages-area").scrollTop($(".messages-area")[0].scrollHeight);
   };
+
   const handleGiphy = function (searchTerm) {
     console.log(searchTerm)
 
@@ -153,7 +162,7 @@ $(document).ready(function () {
 
     // send it to the database
     let messageObj = {
-      name: currentUser,
+      name: `${currentUser} ${genRandomChristmasEmoji()}`,
       message: message,
       tColor: currentColor,
     };

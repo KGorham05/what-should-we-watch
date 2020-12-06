@@ -16,15 +16,16 @@ body {
 
 #hero {
     background-color: #363636;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/kelly-sikkema-bhqKC3UppQE-unsplash.jpg");
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/love_actually.webp");
     color: yellow;
-    background-position: center center;
+    background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
     margin-bottom: 50px;
     padding-top: 10vh;
     padding-bottom: 10vh;
+    min-height: 45vh;
 }
 
 .panther-logo {
