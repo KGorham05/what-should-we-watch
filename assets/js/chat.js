@@ -299,10 +299,10 @@ $(document).ready(function () {
   $("body").on("click", "#send-btn", function () {
     console.log("Clicked send btn");
 
-    bannedGifSources = ["https://media0.giphy.com/media/dOl2LFw0RbTMc/200w.gif", "https://media0.giphy.com/media/EiCQzmzE5HLaw/200w.gif"]
+    bannedGifs = ["https://media0.giphy.com/media/dOl2LFw0RbTMc/200w.gif", "https://media0.giphy.com/media/EiCQzmzE5HLaw/200w.gif", "https://media1.giphy.com/media/EiCQzmzE5HLaw/200w.gif", "https://media2.giphy.com/media/EiCQzmzE5HLaw/200w.gif", "https://media3.giphy.com/media/EiCQzmzE5HLaw/200w.gif", "https://media4.giphy.com/media/EiCQzmzE5HLaw/200w.gif"]
 
     let gifSrcInQuestion = giphyResponse.data[gifIterator].images.fixed_width.url;
-    if (bannedGifSources.includes(gifSrcInQuestion)) {   
+    if (bannedGifs.includes(gifSrcInQuestion)) {   
       gifSrcInQuestion = "https://media1.giphy.com/media/6k2eA8J1k7rGulkoaN/200w.gif";
     } 
 
