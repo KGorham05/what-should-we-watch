@@ -38,7 +38,7 @@ $(document).ready(function () {
     "#FF0080",
   ];
   const christmasEmojis = ["🎅", "🦌", "🍪",  "🥛", "🌟", "❄️", "☃️", "⛄", "🎄", "🎁", "🧦", "🔔", "🕯️"]
-
+  const movieEmojis = ["🎥", "🍿", "🎬", "📼", "📀", "📽️"]
   let currentColor;
   let currentUser;
   let gif;
@@ -52,8 +52,8 @@ $(document).ready(function () {
     return Math.floor(Math.random() * 21);
   };
 
-  const genRandomChristmasEmoji = function() {
-    return christmasEmojis[Math.floor(Math.random() * 13)]
+  const genRandomEmoji = function(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
   };
 
   const scrollToBottom = function () {
@@ -162,7 +162,7 @@ $(document).ready(function () {
 
     // send it to the database
     let messageObj = {
-      name: `${currentUser} ${genRandomChristmasEmoji()}`,
+      name: `${currentUser} ${genRandomEmoji(movieEmojis)}`,
       message: message,
       tColor: currentColor,
     };
