@@ -16,7 +16,7 @@ body {
 
 #hero {
     background-color: #363636;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/popcorn.jpg");
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .8)), url("../images/sierra.jpg");
     color: yellow;
     background-position: top center;
     background-repeat: no-repeat;
@@ -48,7 +48,7 @@ body {
 }
 /* Chat room logic + more - Need to split up into 2 docs */
 .chat-room {
-   height: 100vh; 
+   height: 100vh;
 }
 
 .messages-area {
@@ -134,7 +134,7 @@ body {
     .messages-area {
         height: 87vh;
      }
-     
+
      #messages {
         padding-left: 0px;
     }
@@ -150,4 +150,4 @@ body {
         margin-top: 7px;
     }
 
-} 
+}
